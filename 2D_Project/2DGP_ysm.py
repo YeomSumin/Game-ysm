@@ -46,6 +46,28 @@ class character:
         else:
             self.chreimage.clip_draw(self.chreframe * 85, 0, 85, 160, 275 + 1 * self.x, 600 + 1 * self.y, 63, 90)
 
+class bomb:
+    boimage = None
+
+    def __init__(self):
+        self.x = 0; self.y = 0
+        self.boframe = 0; self.count = 0
+        if bomb.boimage == None:
+            bomb.boimage = load_image('bomb.png')
+        self.exploimage = load_image('explosion.png')
+
+    def update(self):
+        self.count += 1
+
+        if self.count % 10 == 0:
+            self.boframe += 1
+
+        if self.boframe % 10 == 0:
+            self.boframe = 0
+
+    def draw(self):
+        self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, 275 + 1 * self.x, 600 + 1 * self.y, 35, 45)
+
 class flower_leg:
     def __init__(self):
         self.count = 0
@@ -144,6 +166,7 @@ back = background()
 fleg = flower_leg()
 fhead = flower_head()
 char = character()
+bomb = bomb()
 
 while running:
     handle_events()
@@ -152,12 +175,14 @@ while running:
     char.update()
     fleg.update()
     fhead.update()
+    bomb.update()
 
     clear_canvas()
     back.draw()
     char.draw()
     fleg.draw()
     fhead.draw()
+    bomb.draw()
     update_canvas()
 
     delay(0.05)
