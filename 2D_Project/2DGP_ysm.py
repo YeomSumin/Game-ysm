@@ -68,6 +68,22 @@ class bomb:
     def draw(self):
         self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, 275 + 1 * self.x, 600 + 1 * self.y, 35, 45)
 
+def create_bombgroup():
+    bombgroup_data_file = open('bomb_data.txt', 'r')
+    bombgroup_data = json.load(bombgroup_data_file)
+    bombgroup_data_file.close()
+
+    bombgroup = []
+
+    for name in bombgroup_data:
+        bombs = bomb()
+        bombs.name = name
+        bombs.x = bombgroup_data[name]['x']
+        bombs.y = bombgroup_data[name]['y']
+        bombgroup.append(bombs)
+
+    return bombgroup
+
 class flower_leg:
     def __init__(self):
         self.count = 0
@@ -160,13 +176,14 @@ def handle_events():
 
 open_canvas(550, 720)
 
+bomber = create_bombgroup()
+
 running = True;
 
 back = background()
 fleg = flower_leg()
 fhead = flower_head()
 char = character()
-bomb = bomb()
 
 while running:
     handle_events()
@@ -175,14 +192,17 @@ while running:
     char.update()
     fleg.update()
     fhead.update()
-    bomb.update()
+
+    for bombs in bomber:
+        bombs.update()
 
     clear_canvas()
     back.draw()
     char.draw()
     fleg.draw()
     fhead.draw()
-    bomb.draw()
+    for bombs in bomber:
+        bombs.draw()
     update_canvas()
 
     delay(0.05)
