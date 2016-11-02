@@ -50,8 +50,8 @@ class bomb:
     boimage = None
 
     def __init__(self):
-        self.x = 0; self.y = 0
-        self.boframe = 0; self.count = 0
+        self.x = 275; self.y = 600
+        self.boframe = 0; self.count = 0;
         if bomb.boimage == None:
             bomb.boimage = load_image('bomb.png')
         self.exploimage = load_image('explosion.png')
@@ -66,7 +66,7 @@ class bomb:
             self.boframe = 0
 
     def draw(self):
-        self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, 275 + 1 * self.x, 600 + 1 * self.y, 35, 45)
+        self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, self.x, self.y, 35, 45)
 
 def create_bombgroup():
     bombgroup_data_file = open('bomb_data.txt', 'r')
@@ -176,10 +176,9 @@ def handle_events():
 
 open_canvas(550, 720)
 
-bomber = create_bombgroup()
-
 running = True;
 
+bombgroup = create_bombgroup()
 back = background()
 fleg = flower_leg()
 fhead = flower_head()
@@ -193,7 +192,7 @@ while running:
     fleg.update()
     fhead.update()
 
-    for bombs in bomber:
+    for bombs in bombgroup:
         bombs.update()
 
     clear_canvas()
@@ -201,7 +200,7 @@ while running:
     char.draw()
     fleg.draw()
     fhead.draw()
-    for bombs in bomber:
+    for bombs in bombgroup:
         bombs.draw()
     update_canvas()
 
