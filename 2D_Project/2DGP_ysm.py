@@ -15,15 +15,19 @@ class background:
         if self.count % 150 >= 0 and self.count % 150 <= 80:
             self.absorb = True
             self.image2.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
-        elif self.count % 150 > 80: #and self.count % 100 < 100:
+        elif self.count % 150 > 80:  # and self.count % 100 < 100:
             self.absorb = False
             self.image.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
+
 
 class character:
     def __init__(self):
         self.absorb = False
-        self.chframe = 0; self.chreframe = 0; self.count = 0
-        self.x = 0; self.y = 0;
+        self.chframe = 0;
+        self.chreframe = 0;
+        self.count = 0
+        self.x = 0;
+        self.y = 0;
         self.chimage = load_image('character.png')
         self.chreimage = load_image('character_resist.png')
 
@@ -46,12 +50,16 @@ class character:
         else:
             self.chreimage.clip_draw(self.chreframe * 85, 0, 85, 160, 275 + 1 * self.x, 600 + 1 * self.y, 63, 90)
 
+
 class bomb:
     boimage = None
 
     def __init__(self):
-        self.x = 275; self.y = 600
-        self.boframe = 0; self.count = 0;
+        self.absorb = False
+        self.x = 275
+        self.y = 600
+        self.boframe = 0;
+        self.count = 0
         if bomb.boimage == None:
             bomb.boimage = load_image('bomb.png')
         self.exploimage = load_image('explosion.png')
@@ -62,11 +70,22 @@ class bomb:
         if self.count % 10 == 0:
             self.boframe += 1
 
-        if self.boframe % 10 == 0:
-            self.boframe = 0
+        if self.absorb:
+            if self.boframe < 10:
+                self.boframe = 10;
+
+            if self.boframe % 12 == 0:
+                self.boframe = 10
+        else:
+            if self.boframe >= 10:
+                self.boframe = 0;
+
+            if self.boframe % 10 == 0:
+                self.boframe = 0
 
     def draw(self):
         self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, self.x, self.y, 35, 45)
+
 
 def create_bombgroup():
     bombgroup_data_file = open('bomb_data.txt', 'r')
@@ -84,10 +103,13 @@ def create_bombgroup():
 
     return bombgroup
 
+
 class flower_leg:
     def __init__(self):
         self.count = 0
-        self.legf1 = 0; self.legf3 = 0; self.legf4 = 1
+        self.legf1 = 0;
+        self.legf3 = 0;
+        self.legf4 = 1
         self.legimage1 = load_image('flower_leg.png')
         self.legimage2 = load_image('flower_leg2.png')
         self.legimage3 = load_image('flower_leg3.png')
@@ -124,7 +146,8 @@ class flower_leg:
 class flower_head:
     def __init__(self):
         self.absorb = False
-        self.frame = 0; self.abframe = 2
+        self.frame = 0;
+        self.abframe = 2
         self.count = 0
         self.image = load_image('flower_head.png')
 
@@ -149,6 +172,7 @@ class flower_head:
         else:
             self.image.clip_draw(self.frame * 400, 0, 400, 400, 280, 160, 240, 240)
 
+
 def handle_events():
     global running
     events = get_events()
@@ -160,18 +184,23 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_UP:
             char.y += 15
         elif event.type == SDL_KEYDOWN and event.key == SDLK_LEFT:
-            char.x -= 8
+            char.x -= 10
         elif event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT:
-            char.x += 8
+            char.x += 10
 
     if back.absorb:
         fhead.absorb = True
         char.absorb = True
+        for bombs in bombgroup:
+            bombs.absorb = True
+
         if 600 + 1 * char.y > 140:
             char.y -= 7
     else:
         fhead.absorb = False
         char.absorb = False
+        for bombs in bombgroup:
+            bombs.absorb = False
 
 
 open_canvas(550, 720)
