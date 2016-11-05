@@ -64,6 +64,7 @@ class character:
 
 class bomb:
     boimage = None
+    exploimage = None
 
     def __init__(self):
         self.absorb = False
@@ -73,7 +74,8 @@ class bomb:
         self.count = 0
         if bomb.boimage == None:
             bomb.boimage = load_image('bomb.png')
-        self.exploimage = load_image('explosion.png')
+        if bomb.exploimage == None:
+            bomb.exploimage = load_image('explosion.png')
 
     def update(self):
         self.count += 1
