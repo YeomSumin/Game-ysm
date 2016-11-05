@@ -1,6 +1,17 @@
 import random
 from pico2d import *
 
+import game_framework
+import title_state
+
+name = "MainState"
+
+back = None
+fleg = None
+fhead = None
+char = None
+bombgroup = None
+
 class background:
     def __init__(self):
         self.absorb = False
@@ -173,14 +184,39 @@ class flower_head:
             self.image.clip_draw(self.frame * 400, 0, 400, 400, 280, 160, 240, 240)
 
 
+def enter():
+    global back, fleg, fhead, char, bombgroup
+    bombgroup = create_bombgroup()
+    back = background()
+    fleg = flower_leg()
+    fhead = flower_head()
+    char = character()
+
+
+def exit():
+    global back, fleg, fhead, char, bombgroup
+    del(back)
+    del(fleg)
+    del(fhead)
+    del(char)
+    del(bombgroup)
+
+
+def pause():
+    pass
+
+
+def resume():
+    pass
+
+
 def handle_events():
-    global running
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
-            running = False
+            game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            running = False
+            game_framework.change_state(title_state)
         elif event.type == SDL_KEYDOWN and event.key == SDLK_UP:
             char.y += 15
         elif event.type == SDL_KEYDOWN and event.key == SDLK_LEFT:
@@ -203,19 +239,7 @@ def handle_events():
             bombs.absorb = False
 
 
-open_canvas(550, 720)
-
-running = True;
-
-bombgroup = create_bombgroup()
-back = background()
-fleg = flower_leg()
-fhead = flower_head()
-char = character()
-
-while running:
-    handle_events()
-
+def update():
     back.update()
     char.update()
     fleg.update()
@@ -224,6 +248,8 @@ while running:
     for bombs in bombgroup:
         bombs.update()
 
+
+def draw():
     clear_canvas()
     back.draw()
     char.draw()
@@ -234,5 +260,3 @@ while running:
     update_canvas()
 
     delay(0.05)
-
-close_canvas()
