@@ -1,21 +1,24 @@
 import random
 from pico2d import *
 
+# 06상태, main,
+
 import game_framework
 import title_state
 
 name = "MainState"
 
 back = None
-fleg = None
-fhead = None
-char = None
-bombgroup = None
+stem = None
+head = None
+mario = None
+seeds = None
+current_time, frame_time = 0.0, 0.0
 
 class background:
     def __init__(self):
         self.absorb = False
-        self.count = 230;
+        self.count = 230
         self.image = load_image('background1.png')
         self.image2 = load_image('background2.png')
 
@@ -32,34 +35,66 @@ class background:
 
 
 class character:
+    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+    RUN_SPEED_KMPH = 20.0  # Km / Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+    TIME_PER_ACTION = 0.5
+    ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+    FRAMES_PER_ACTION = 10
+
+    STILL, UP, LEFT, RIGHT= 0, 1, 2, 3
+
     def __init__(self):
         self.absorb = False
-        self.chframe = 0;
-        self.chreframe = 0;
-        self.count = 0
-        self.x = 0;
-        self.y = 0;
+        self.state = self.STILL
+        self.chframe, self.chreframe, self.count = 0, 0, 0
+        self.life_time, self.total_frames = 0.0, 0.0
+        self.x, self.y = 275, 600
         self.chimage = load_image('character.png')
         self.chreimage = load_image('character_resist.png')
 
-    def update(self):
+    def handle_event(self, event):
+        if (event.type, event.key) == (SDL_KEYDOWN, SDLK_UP):
+            self.state = self.UP
+        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
+            self.state = self.LEFT
+        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RIGHT):
+            self.state = self.RIGHT
+        else:
+            self.state = self.STILL
+
+    def update(self, frame_time):
+        self.life_time += frame_time
+        distance = character.RUN_SPEED_PPS * frame_time
+        self.total_frames += character.FRAMES_PER_ACTION * character.ACTION_PER_TIME * frame_time
+        self.chframe = int(self.total_frames) % 10
+
         self.count += 1
 
+        if self.state == self.UP:
+            self.y = min(700, self.y + 15)
+        if self.state == self.LEFT:
+            self.x = max(20, self.x - 10)
+        if self.state == self.RIGHT:
+            self.x = min(530, self.x + 10)
+
         if self.count % 5 == 0:
-            self.chframe += 1
             self.chreframe += 1
-
-        if self.chframe % 10 == 0:
-            self.chframe = 0
-
         if self.chreframe % 4 == 0:
             self.chreframe = 0
 
+        if self.absorb:
+            if self.y > 140:
+                self.y -= 7
+
     def draw(self):
         if self.absorb == False:
-            self.chimage.clip_draw(self.chframe * 60, 0, 60, 160, 275 + 1 * self.x, 600 + 1 * self.y, 60, 90)
+            self.chimage.clip_draw(self.chframe * 60, 0, 60, 160, self.x, self.y, 60, 90)
         else:
-            self.chreimage.clip_draw(self.chreframe * 85, 0, 85, 160, 275 + 1 * self.x, 600 + 1 * self.y, 63, 90)
+            self.chreimage.clip_draw(self.chreframe * 85, 0, 85, 160, self.x, self.y, 63, 90)
 
 
 class bomb:
@@ -70,8 +105,8 @@ class bomb:
         self.absorb = False
         self.x = 275
         self.y = 600
-        self.boframe = 0;
-        self.count = 0
+        self.boframe = random.randint(0, 9)
+        self.count = random.randint(0, 9)
         if bomb.boimage == None:
             bomb.boimage = load_image('bomb.png')
         if bomb.exploimage == None:
@@ -81,20 +116,16 @@ class bomb:
         self.count += 1
 
         if self.count % 10 == 0:
-            self.boframe += 1
+            self.boframe = (self.boframe + 1) % 10
 
         if self.absorb:
             if self.boframe < 10:
-                self.boframe = 10;
-
-            if self.boframe % 12 == 0:
-                self.boframe = 10
-        else:
-            if self.boframe >= 10:
-                self.boframe = 0;
-
-            if self.boframe % 10 == 0:
-                self.boframe = 0
+                self.boframe = random.randint(10, 11)
+            if self.count % 10 == 0:
+                if self.boframe == 11:
+                    self.boframe = 10
+                else:
+                    self.boframe = (self.boframe + 1) % 13
 
     def draw(self):
         self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, self.x, self.y, 35, 45)
@@ -120,8 +151,8 @@ def create_bombgroup():
 class flower_leg:
     def __init__(self):
         self.count = 0
-        self.legf1 = 0;
-        self.legf3 = 0;
+        self.legf1 = 0
+        self.legf3 = 0
         self.legf4 = 1
         self.legimage1 = load_image('flower_leg.png')
         self.legimage2 = load_image('flower_leg2.png')
@@ -159,7 +190,7 @@ class flower_leg:
 class flower_head:
     def __init__(self):
         self.absorb = False
-        self.frame = 0;
+        self.frame = 0
         self.abframe = 2
         self.count = 0
         self.image = load_image('flower_head.png')
@@ -186,22 +217,37 @@ class flower_head:
             self.image.clip_draw(self.frame * 400, 0, 400, 400, 280, 160, 240, 240)
 
 
+TARGET_FPS = 60.0
+TARGET_FRAME_TIME = 1.0 / TARGET_FPS
+
+
+def get_frame_time():
+
+    global current_time, frame_time
+
+    frame_time = get_time() - current_time
+    current_time += frame_time
+    return frame_time
+
+
 def enter():
-    global back, fleg, fhead, char, bombgroup
-    bombgroup = create_bombgroup()
+    global back, stem, head, mario, seeds, current_time, frame_time
+    frame_time = get_frame_time()
+    seeds = create_bombgroup()
     back = background()
-    fleg = flower_leg()
-    fhead = flower_head()
-    char = character()
+    stem = flower_leg()
+    head = flower_head()
+    mario = character()
+    current_time = get_time()
 
 
 def exit():
-    global back, fleg, fhead, char, bombgroup
+    global back, stem, head, mario, seeds
     del(back)
-    del(fleg)
-    del(fhead)
-    del(char)
-    del(bombgroup)
+    del(stem)
+    del(head)
+    del(mario)
+    del(seeds)
 
 
 def pause():
@@ -212,53 +258,51 @@ def resume():
     pass
 
 
-def handle_events():
+def handle_events(frame_time):
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
             game_framework.change_state(title_state)
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_UP:
-            char.y += 15
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_LEFT:
-            char.x -= 10
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT:
-            char.x += 10
+        else:
+            mario.handle_event(event)
 
     if back.absorb:
-        fhead.absorb = True
-        char.absorb = True
-        for bombs in bombgroup:
+        head.absorb = True
+        mario.absorb = True
+        for bombs in seeds:
             bombs.absorb = True
 
-        if 600 + 1 * char.y > 140:
-            char.y -= 7
     else:
-        fhead.absorb = False
-        char.absorb = False
-        for bombs in bombgroup:
+        head.absorb = False
+        mario.absorb = False
+        for bombs in seeds:
             bombs.absorb = False
 
 
 def update():
     back.update()
-    char.update()
-    fleg.update()
-    fhead.update()
+    mario.update(frame_time)
+    stem.update()
+    head.update()
 
-    for bombs in bombgroup:
+    for bombs in seeds:
         bombs.update()
 
 
 def draw():
     clear_canvas()
     back.draw()
-    char.draw()
-    fleg.draw()
-    fhead.draw()
-    for bombs in bombgroup:
+    mario.draw()
+    stem.draw()
+    head.draw()
+    for bombs in seeds:
         bombs.draw()
     update_canvas()
+
+    frame_time = get_time() - current_time
+    frame_rate = 1.0 / frame_time
+    current_time += frame_time
 
     delay(0.05)
