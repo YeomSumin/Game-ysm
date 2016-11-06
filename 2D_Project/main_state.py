@@ -13,7 +13,6 @@ stem = None
 head = None
 mario = None
 seeds = None
-current_time, frame_time = 0.0, 0.0
 
 class background:
     def __init__(self):
@@ -35,23 +34,12 @@ class background:
 
 
 class character:
-    PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0  # Km / Hour
-    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
-    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
-    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
-
-    TIME_PER_ACTION = 0.5
-    ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-    FRAMES_PER_ACTION = 10
-
     STILL, UP, LEFT, RIGHT= 0, 1, 2, 3
 
     def __init__(self):
         self.absorb = False
         self.state = self.STILL
         self.chframe, self.chreframe, self.count = 0, 0, 0
-        self.life_time, self.total_frames = 0.0, 0.0
         self.x, self.y = 275, 600
         self.chimage = load_image('character.png')
         self.chreimage = load_image('character_resist.png')
@@ -66,12 +54,7 @@ class character:
         else:
             self.state = self.STILL
 
-    def update(self, frame_time):
-        self.life_time += frame_time
-        distance = character.RUN_SPEED_PPS * frame_time
-        self.total_frames += character.FRAMES_PER_ACTION * character.ACTION_PER_TIME * frame_time
-        self.chframe = int(self.total_frames) % 10
-
+    def update(self):
         self.count += 1
 
         if self.state == self.UP:
@@ -217,28 +200,13 @@ class flower_head:
             self.image.clip_draw(self.frame * 400, 0, 400, 400, 280, 160, 240, 240)
 
 
-TARGET_FPS = 60.0
-TARGET_FRAME_TIME = 1.0 / TARGET_FPS
-
-
-def get_frame_time():
-
-    global current_time, frame_time
-
-    frame_time = get_time() - current_time
-    current_time += frame_time
-    return frame_time
-
-
 def enter():
-    global back, stem, head, mario, seeds, current_time, frame_time
-    frame_time = get_frame_time()
+    global back, stem, head, mario, seeds
     seeds = create_bombgroup()
     back = background()
     stem = flower_leg()
     head = flower_head()
     mario = character()
-    current_time = get_time()
 
 
 def exit():
@@ -258,7 +226,7 @@ def resume():
     pass
 
 
-def handle_events(frame_time):
+def handle_events():
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -283,7 +251,7 @@ def handle_events(frame_time):
 
 def update():
     back.update()
-    mario.update(frame_time)
+    mario.update()
     stem.update()
     head.update()
 
@@ -300,9 +268,5 @@ def draw():
     for bombs in seeds:
         bombs.draw()
     update_canvas()
-
-    frame_time = get_time() - current_time
-    frame_rate = 1.0 / frame_time
-    current_time += frame_time
 
     delay(0.05)
