@@ -30,7 +30,7 @@ def update():
 def draw():
     global image
     clear_canvas()
-    image.clip_draw(150, 0, 450, 600, 275, 360, 550, 720)
+    image.clip_draw(120, 0, 520, 600, 275, 360, 550, 720)
     update_canvas()
 
 def handle_events():

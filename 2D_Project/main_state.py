@@ -86,9 +86,10 @@ class bomb:
 
     def __init__(self):
         self.absorb = False
+        self.suck = random.randint(1, 7)
         self.x = 275
         self.y = 600
-        self.boframe = random.randint(0, 9)
+        self.boframe = random.randint(0, 10)
         self.count = random.randint(0, 9)
         if bomb.boimage == None:
             bomb.boimage = load_image('bomb.png')
@@ -109,6 +110,17 @@ class bomb:
                     self.boframe = 10
                 else:
                     self.boframe = (self.boframe + 1) % 13
+
+            if (self.suck % 3) or (self.suck % 7) == 0:
+                if self.y > 140:
+                    self.y -= 9
+
+                if self.x < 280:
+                    self.x += 7
+                else:
+                    self.x -= 7
+        else:
+            self.suck = random.randint(0, 7)
 
     def draw(self):
         self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, self.x, self.y, 35, 45)
@@ -202,11 +214,11 @@ class flower_head:
 
 def enter():
     global back, stem, head, mario, seeds
-    seeds = create_bombgroup()
     back = background()
     stem = flower_leg()
-    head = flower_head()
     mario = character()
+    seeds = create_bombgroup()
+    head = flower_head()
 
 
 def exit():
@@ -253,10 +265,9 @@ def update():
     back.update()
     mario.update()
     stem.update()
-    head.update()
-
     for bombs in seeds:
         bombs.update()
+    head.update()
 
 
 def draw():
@@ -264,9 +275,9 @@ def draw():
     back.draw()
     mario.draw()
     stem.draw()
-    head.draw()
     for bombs in seeds:
         bombs.draw()
+    head.draw()
     update_canvas()
 
     delay(0.05)
