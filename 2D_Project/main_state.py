@@ -17,6 +17,7 @@ seeds = None
 class background:
     def __init__(self):
         self.absorb = False
+        self.spit = False
         self.count = 230
         self.image = load_image('background1.png')
         self.image2 = load_image('background2.png')
@@ -86,6 +87,7 @@ class bomb:
 
     def __init__(self):
         self.absorb = False
+        self.spit = False
         self.suck = random.randint(1, 7)
         self.x = 275
         self.y = 600
