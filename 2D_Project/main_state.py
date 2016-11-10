@@ -35,6 +35,13 @@ class background:
 
 
 class character:
+    PIXEL_PER_METER = (114.0 / 0.06)  # 114 pixel 6cm
+    RUN_SPEED_KMPH = 3.2  # Km / Hour
+    RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)  # mpm = 1분에 몇미터
+    RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)  # MPS = 1초당 몇미터
+    RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)  # PPS = pulse per second(?)
+    #  스피드 인듯
+
     STILL, UP, LEFT, RIGHT= 0, 1, 2, 3
 
     def __init__(self):
@@ -57,6 +64,7 @@ class character:
 
     def update(self):
         self.count += 1
+        self.y -= 0.2
 
         if self.state == self.UP:
             self.y = min(700, self.y + 15)
@@ -66,7 +74,10 @@ class character:
             self.x = min(530, self.x + 10)
 
         if self.count % 5 == 0:
+            self.chframe += 1
             self.chreframe += 1
+        if self.chframe % 10 == 0:
+            self.chframe = 0
         if self.chreframe % 4 == 0:
             self.chreframe = 0
 
@@ -76,9 +87,9 @@ class character:
 
     def draw(self):
         if self.absorb == False:
-            self.chimage.clip_draw(self.chframe * 60, 0, 60, 160, self.x, self.y, 60, 90)
+            self.chimage.clip_draw(self.chframe * 60, 0, 60, 160, self.x, self.y, 56, 86) #60 90
         else:
-            self.chreimage.clip_draw(self.chreframe * 85, 0, 85, 160, self.x, self.y, 63, 90)
+            self.chreimage.clip_draw(self.chreframe * 85, 0, 85, 160, self.x, self.y, 60, 87) #63 90
 
 
 class bomb:
