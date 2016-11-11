@@ -8,6 +8,7 @@ import title_state
 
 name = "MainState"
 
+current_time = 0.0
 back = None
 stem = None
 head = None
@@ -35,19 +36,24 @@ class background:
 
 
 class character:
-    PIXEL_PER_METER = (114.0 / 0.06)  # 114 pixel 6cm
-    RUN_SPEED_KMPH = 3.2  # Km / Hour
+    PIXEL_PER_METER = (40.0 / 0.1)  # 40 pixel 10cm
+    RUN_SPEED_KMPH = 2.5  # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)  # mpm = 1분에 몇미터
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)  # MPS = 1초당 몇미터
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)  # PPS = pulse per second(?)
-    #  스피드 인듯
+    #  스피드인듯
 
-    STILL, UP, LEFT, RIGHT= 0, 1, 2, 3
+    TIME_PER_ACTION = 0.5
+    ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+    FRAMES_PER_ACTION = 10
+
+    STILL, UP, LEFT, RIGHT = 0, 1, 2, 3
 
     def __init__(self):
         self.absorb = False
         self.state = self.STILL
         self.chframe, self.chreframe, self.count = 0, 0, 0
+        self.total_frames = 0.0
         self.x, self.y = 275, 600
         self.chimage = load_image('character.png')
         self.chreimage = load_image('character_resist.png')
@@ -56,30 +62,31 @@ class character:
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_UP):
             self.state = self.UP
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
-            self.state = self.LEFT
+            if self.state in (self.RIGHT, self.UP, self.STILL):
+                self.state = self.LEFT
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RIGHT):
-            self.state = self.RIGHT
-        else:
+            if self.state in (self.LEFT, self.UP, self.STILL):
+                self.state = self.RIGHT
+        elif event.type == SDL_KEYUP:
             self.state = self.STILL
 
-    def update(self):
+    def update(self, frame_time):
+        distance = character.RUN_SPEED_PPS * frame_time
+        self.total_frames += character.FRAMES_PER_ACTION * character.ACTION_PER_TIME * frame_time
         self.count += 1
         self.y -= 0.2
 
         if self.state == self.UP:
-            self.y = min(700, self.y + 15)
+            self.y += distance
         if self.state == self.LEFT:
-            self.x = max(20, self.x - 10)
+            self.x -= distance
         if self.state == self.RIGHT:
-            self.x = min(530, self.x + 10)
+            self.x += distance
 
         if self.count % 5 == 0:
-            self.chframe += 1
-            self.chreframe += 1
-        if self.chframe % 10 == 0:
-            self.chframe = 0
-        if self.chreframe % 4 == 0:
-            self.chreframe = 0
+            #self.chframe = (self.chframe + 1) % 10
+            self.chframe = int(self.total_frames) % 10
+            self.chreframe = (self.chreframe + 1) % 4
 
         if self.absorb:
             if self.y > 140:
@@ -171,22 +178,13 @@ class flower_leg:
         self.count += 1
 
         if self.count % 11 == 0:
-            self.legf1 += 1
-
-        if self.legf1 % 2 == 0:
-            self.legf1 = 0
+            self.legf1 = (self.legf1 + 1) % 2
 
         if self.count % 17 == 0:
-            self.legf3 += 1
-
-        if self.legf3 % 2 == 0:
-            self.legf3 = 0
+            self.legf3 = (self.legf3 + 1) % 2
 
         if self.count % 23 == 0:
-            self.legf4 += 1
-
-        if self.legf4 % 3 == 0:
-            self.legf4 = 1
+            self.legf4 = (self.legf4 + 1) % 3
 
     def draw(self):
         self.legimage1.clip_draw(self.legf1 * 100, 0, 100, 400, 50, 101, 50, 200)
@@ -213,10 +211,7 @@ class flower_head:
                     self.abframe = 2
         else:
             if self.count % 25 == 0:
-                self.frame += 1
-
-            if self.frame % 2 == 0:
-                self.frame = 0
+                self.frame = (self.frame + 1) % 2
 
     def draw(self):
         if self.absorb:
@@ -224,9 +219,17 @@ class flower_head:
         else:
             self.image.clip_draw(self.frame * 400, 0, 400, 400, 280, 160, 240, 240)
 
+def get_frame_time():
+    global current_time
+    frame_time = get_time() - current_time
+    current_time += frame_time
+    return frame_time
 
 def enter():
-    global back, stem, head, mario, seeds
+    global back, stem, head, mario, seeds, current_time
+
+    current_time = get_time()
+
     back = background()
     stem = flower_leg()
     mario = character()
@@ -246,10 +249,8 @@ def exit():
 def pause():
     pass
 
-
 def resume():
     pass
-
 
 def handle_events():
     events = get_events()
@@ -261,6 +262,7 @@ def handle_events():
         else:
             mario.handle_event(event)
 
+"""
     if back.absorb:
         head.absorb = True
         mario.absorb = True
@@ -272,11 +274,14 @@ def handle_events():
         mario.absorb = False
         for bombs in seeds:
             bombs.absorb = False
-
+"""
 
 def update():
+    global frame_time
+    frame_time = get_frame_time()
+
     back.update()
-    mario.update()
+    mario.update(frame_time)
     stem.update()
     for bombs in seeds:
         bombs.update()
@@ -292,5 +297,3 @@ def draw():
         bombs.draw()
     head.draw()
     update_canvas()
-
-    delay(0.05)
