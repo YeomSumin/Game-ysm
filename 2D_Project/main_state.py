@@ -27,10 +27,10 @@ class background:
         self.count += 1
 
     def draw(self):
-        if self.count % 150 >= 0 and self.count % 150 <= 80:
+        if self.count % 1500 >= 0 and self.count % 1500 <= 800:
             self.absorb = True
             self.image2.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
-        elif self.count % 150 > 80:  # and self.count % 100 < 100:
+        elif self.count % 1500 > 800:  # and self.count % 100 < 100:
             self.absorb = False
             self.image.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
 
@@ -41,11 +41,13 @@ class character:
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)  # mpm = 1분에 몇미터
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)  # MPS = 1초당 몇미터
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)  # PPS = pulse per second(?)
-    #  스피드인듯
 
-    TIME_PER_ACTION = 0.5
+    TIME_PER_ACTION = 4
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 10
+    TIME_PER_RACTION = 1
+    RACTION_PER_TIME = 1.0 / TIME_PER_RACTION
+    FRAMES_PER_RACTION = 4
 
     STILL, UP, LEFT, RIGHT = 0, 1, 2, 3
 
@@ -53,7 +55,7 @@ class character:
         self.absorb = False
         self.state = self.STILL
         self.chframe, self.chreframe, self.count = 0, 0, 0
-        self.total_frames = 0.0
+        self.total_frames, self.total_rframes = 0.0, 0.0
         self.x, self.y = 275, 600
         self.chimage = load_image('character.png')
         self.chreimage = load_image('character_resist.png')
@@ -81,6 +83,7 @@ class character:
     def update(self, frame_time):
         distance = character.RUN_SPEED_PPS * frame_time
         self.total_frames += character.FRAMES_PER_ACTION * character.ACTION_PER_TIME * frame_time
+        self.total_rframes += character.FRAMES_PER_RACTION * character.RACTION_PER_TIME * frame_time
         self.count += 1
         self.y -= 0.2
 
@@ -91,16 +94,14 @@ class character:
         if self.state == self.RIGHT:
             self.x += distance
 
-        print("$d",self.state)
-
-        if self.count % 5 == 0:
+        if self.count % 100 == 0:
             #self.chframe = (self.chframe + 1) % 10
             self.chframe = int(self.total_frames) % 10
-            self.chreframe = (self.chreframe + 1) % 4
+            self.chreframe = int(self.total_rframes) % 4
 
         if self.absorb:
             if self.y > 140:
-                self.y -= 7
+                self.y -= 0.5
 
     def draw(self):
         if self.absorb == False:
@@ -272,19 +273,18 @@ def handle_events():
         else:
             mario.handle_event(event)
 
-"""
-    if back.absorb:
-        head.absorb = True
-        mario.absorb = True
-        for bombs in seeds:
-            bombs.absorb = True
 
+    if back.absorb:
+        #head.absorb = True
+        mario.absorb = True
+        #for bombs in seeds:
+            #bombs.absorb = True
     else:
-        head.absorb = False
+        #head.absorb = False
         mario.absorb = False
-        for bombs in seeds:
-            bombs.absorb = False
-"""
+        #for bombs in seeds:
+            #bombs.absorb = False
+
 
 def update():
     global frame_time
