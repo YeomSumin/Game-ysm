@@ -67,8 +67,16 @@ class character:
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RIGHT):
             if self.state in (self.LEFT, self.UP, self.STILL):
                 self.state = self.RIGHT
-        elif event.type == SDL_KEYUP:
-            self.state = self.STILL
+        elif (event.type, event.key) == (SDL_KEYUP, SDLK_LEFT):
+            if self.state in (self.LEFT,):
+                self.state = self.STILL
+        elif (event.type, event.key) == (SDL_KEYUP, SDLK_RIGHT):
+            if self.state in (self.RIGHT,):
+                self.state = self.STILL
+        elif (event.type, event.key) == (SDL_KEYUP, SDLK_UP):
+            if self.state in (self.UP,):
+                self.state = self.STILL
+
 
     def update(self, frame_time):
         distance = character.RUN_SPEED_PPS * frame_time
@@ -82,6 +90,8 @@ class character:
             self.x -= distance
         if self.state == self.RIGHT:
             self.x += distance
+
+        print("$d",self.state)
 
         if self.count % 5 == 0:
             #self.chframe = (self.chframe + 1) % 10
