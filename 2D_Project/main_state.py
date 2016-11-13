@@ -18,6 +18,8 @@ seeds = None
 class background:
     def __init__(self):
         self.absorb = False
+        self.turn = 0
+        self.sturn = 0
         self.spit = False
         self.count = 2300
         self.image = load_image('background1.png')
@@ -134,28 +136,28 @@ class bomb:
             self.boframe = (self.boframe + 1) % 10
 
         if self.absorb:
-            if self.boframe < 10:
-                self.boframe = random.randint(10, 11)
-            if self.count % 10 == 0:
-                if self.boframe == 11:
-                    self.boframe = 10
-                else:
-                    self.boframe = (self.boframe + 1) % 13
-
-            if (self.suck % 3) or (self.suck % 7) == 0:
-                if self.y > 140:
-                    self.y -= 9
-
-                if self.x < 280:
-                    self.x += 7
-                else:
-                    self.x -= 7
-        else:
             if self.spit:
                 if self.y < 150:
-                    self.y += 9
+                    self.y += 0.9
             else:
-                self.suck = random.randint(0, 7)
+                if self.boframe < 10:
+                    self.boframe = random.randint(10, 11)
+                if self.count % 10 == 0:
+                    if self.boframe == 11:
+                        self.boframe = 10
+                    else:
+                        self.boframe = (self.boframe + 1) % 13
+
+                if (self.suck % 3) or (self.suck % 7) == 0:
+                    if self.y > 140:
+                        self.y -= 0.9
+
+                    if self.x < 280:
+                        self.x += 0.7
+                    else:
+                        self.x -= 0.7
+        else:
+            self.suck = random.randint(0, 7)
 
     def draw(self):
         self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, self.x, self.y, 35, 45)
@@ -277,7 +279,6 @@ def handle_events():
         else:
             mario.handle_event(event)
 
-
     if back.absorb:
         #head.absorb = True
         mario.absorb = True
@@ -288,7 +289,7 @@ def handle_events():
         mario.absorb = False
         for bombs in seeds:
             bombs.absorb = False
-            bombs.spit = True
+            bombs.spit = False
 
 
 def update():
