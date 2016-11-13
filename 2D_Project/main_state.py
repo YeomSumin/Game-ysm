@@ -19,7 +19,7 @@ class background:
     def __init__(self):
         self.absorb = False
         self.spit = False
-        self.count = 230
+        self.count = 2300
         self.image = load_image('background1.png')
         self.image2 = load_image('background2.png')
 
@@ -85,7 +85,7 @@ class character:
         self.total_frames += character.FRAMES_PER_ACTION * character.ACTION_PER_TIME * frame_time
         self.total_rframes += character.FRAMES_PER_RACTION * character.RACTION_PER_TIME * frame_time
         self.count += 1
-        self.y -= 0.2
+        self.y -= 0.01
 
         if self.state == self.UP:
             self.y += distance
@@ -151,7 +151,11 @@ class bomb:
                 else:
                     self.x -= 7
         else:
-            self.suck = random.randint(0, 7)
+            if self.spit:
+                if self.y < 150:
+                    self.y += 9
+            else:
+                self.suck = random.randint(0, 7)
 
     def draw(self):
         self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, self.x, self.y, 35, 45)
@@ -277,13 +281,14 @@ def handle_events():
     if back.absorb:
         #head.absorb = True
         mario.absorb = True
-        #for bombs in seeds:
-            #bombs.absorb = True
+        for bombs in seeds:
+            bombs.absorb = True
     else:
         #head.absorb = False
         mario.absorb = False
-        #for bombs in seeds:
-            #bombs.absorb = False
+        for bombs in seeds:
+            bombs.absorb = False
+            bombs.spit = True
 
 
 def update():
