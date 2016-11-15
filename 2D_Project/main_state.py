@@ -24,7 +24,7 @@ class background:
         self.turn = 0
         self.sturn = 0
         self.spit = False
-        self.count = 2800
+        self.count = 3800
         self.image = load_image('background1.png')
         self.image2 = load_image('background2.png')
 
@@ -32,10 +32,10 @@ class background:
         self.count += 1
 
     def draw(self):
-        if self.count % 2000 >= 0 and self.count % 2000 <= 800:
+        if self.count % 3000 >= 0 and self.count % 3000 <= 800:
             self.absorb = True
             self.image2.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
-        elif self.count % 2000 > 800:  # and self.count % 100 < 100:
+        elif self.count % 3000 > 800:  # and self.count % 100 < 100:
             self.absorb = False
             self.image.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
 
