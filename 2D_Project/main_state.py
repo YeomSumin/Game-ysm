@@ -24,7 +24,7 @@ class background:
         self.turn = 0
         self.sturn = 0
         self.spit = False
-        self.count = 2300
+        self.count = 2800
         self.image = load_image('background1.png')
         self.image2 = load_image('background2.png')
 
@@ -32,10 +32,10 @@ class background:
         self.count += 1
 
     def draw(self):
-        if self.count % 1500 >= 0 and self.count % 1500 <= 800:
+        if self.count % 2000 >= 0 and self.count % 2000 <= 800:
             self.absorb = True
             self.image2.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
-        elif self.count % 1500 > 800:  # and self.count % 100 < 100:
+        elif self.count % 2000 > 800:  # and self.count % 100 < 100:
             self.absorb = False
             self.image.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
 
@@ -227,6 +227,24 @@ def create_bombgroup():
 
     return bombgroup
 
+def load_bombgroup():
+    bombgroup_data_file = open('bomb_data.txt', 'r')
+    bombgroup_data = json.load(bombgroup_data_file)
+    bombgroup_data_file.close()
+    """
+    bombgroup = []
+
+    for name in bombgroup_data:
+        bombs = bomb()
+        bombs.name = name
+        bombs.x = bombgroup_data[name]['x']
+        bombs.x = bombgroup_data[name]['x']
+        bombs.y = bombgroup_data[name]['y']
+        bombgroup.append(bombs)
+
+    return bombgroup
+    """
+
 
 def collide(a, b):
     left_a, bottom_a, right_a, top_a = a.get_bb()
@@ -340,7 +358,7 @@ def resume():
     pass
 
 def handle_events():
-    global change, moment, pick
+    global change, moment, pick, seeds
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -371,7 +389,6 @@ def handle_events():
                     bombs.y = mario.y - 10
                 if collide(head, bombs) and bombs.put:
                     bombs.explosion = True
-                    mario.stage = True
             head.absorb = True
             mario.absorb = True
             for bombs in seeds:
@@ -399,7 +416,6 @@ def handle_events():
 def update():
     global frame_time
     frame_time = get_frame_time()
-
     back.update()
     mario.update(frame_time)
     stem.update()
