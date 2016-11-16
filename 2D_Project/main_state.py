@@ -1,8 +1,6 @@
 import random
 from pico2d import *
 
-# 06상태, main,
-
 import game_framework
 import title_state
 
