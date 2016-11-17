@@ -225,24 +225,6 @@ def create_bombgroup():
 
     return bombgroup
 
-def load_bombgroup():
-    bombgroup_data_file = open('bomb_data.txt', 'r')
-    bombgroup_data = json.load(bombgroup_data_file)
-    bombgroup_data_file.close()
-    """
-    bombgroup = []
-
-    for name in bombgroup_data:
-        bombs = bomb()
-        bombs.name = name
-        bombs.x = bombgroup_data[name]['x']
-        bombs.x = bombgroup_data[name]['x']
-        bombs.y = bombgroup_data[name]['y']
-        bombgroup.append(bombs)
-
-    return bombgroup
-    """
-
 
 def collide(a, b):
     left_a, bottom_a, right_a, top_a = a.get_bb()
