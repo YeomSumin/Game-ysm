@@ -117,6 +117,7 @@ class character:
     def get_bb(self):
         return self.x - 3, self.y - 3, self.x + 3, self.y + 3 #28 43
 
+
 class bomb:
     TIME_PER_ACTION = 4
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
@@ -304,11 +305,13 @@ class flower_head:
     def get_bb(self):
         return self.x - 130, self.y - 110, self.x + 130, self.y + 110
 
+
 def get_frame_time():
     global current_time
     frame_time = get_time() - current_time
     current_time += frame_time
     return frame_time
+
 
 def enter():
     global back, stem, head, mario, seeds, current_time
@@ -334,8 +337,10 @@ def exit():
 def pause():
     pass
 
+
 def resume():
     pass
+
 
 def handle_events():
     global change, moment, pick, seeds
@@ -392,6 +397,7 @@ def handle_events():
                 bombs.absorb = False
                 bombs.spit = False
             change = False
+
 
 def update():
     global frame_time
