@@ -55,6 +55,7 @@ class character:
     STILL, UP, LEFT, RIGHT = 0, 1, 2, 3
 
     def __init__(self):
+        self.absorb = False
         self.state = self.STILL
         self.chframe, self.chreframe, self.count = 0, 0, 0
         self.total_frames, self.total_rframes = 0.0, 0.0
@@ -103,9 +104,9 @@ class character:
             self.chframe = int(self.total_frames) % 10
             self.chreframe = int(self.total_rframes) % 4
 
-    def absorb(self):
-        if self.y > 140:
-            self.y -= self.level
+        if self.absorb:
+            if self.y > 140:
+                self.y -= self.level
 
     def draw(self):
         if self.absorb == False:
@@ -374,13 +375,14 @@ def handle_events():
                 if collide(head, bombs) and bombs.put:
                     bombs.explosion = True
             head.absorb = True
-            mario.absorb()
+            mario.absorb = True
             for bombs in seeds:
                 bombs.absorb = True
             moment = True
     else:
         if moment:
             change = True
+            mario.absorb = False
             head.absorb = False
             for bombs in seeds:
                 bombs.absorb = False
@@ -390,6 +392,7 @@ def handle_events():
                     bombs.x = mario.x
                     bombs.y = mario.y - 10
             head.absorb = False
+            mario.absorb = False
             for bombs in seeds:
                 bombs.absorb = False
                 bombs.spit = False
