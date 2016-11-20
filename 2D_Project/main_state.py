@@ -199,6 +199,10 @@ class bomb:
             if self.turn == False and self.coll == False:
                 self.suck = random.randint(0, 7)
 
+    def caught(self, mario):
+        self.x = mario.x
+        self.y = mario.y - 10
+
 
     def draw(self):
         if self.explosion == True:
@@ -363,15 +367,13 @@ def handle_events():
                 bombs.spit = True
                 if collide(mario, bombs):
                     bombs.coll = True
-                    bombs.x = mario.x
-                    bombs.y = mario.y - 10
+                    bombs.caught(mario)
 
             moment = False
         else:
             for bombs in seeds:
                 if bombs.coll and bombs.put == False:
-                    bombs.x = mario.x
-                    bombs.y = mario.y - 10
+                    bombs.caught(mario)
                 if collide(head, bombs) and bombs.put:
                     bombs.explosion = True
             head.absorb = True
@@ -389,8 +391,7 @@ def handle_events():
         else:
             for bombs in seeds:
                 if bombs.coll:
-                    bombs.x = mario.x
-                    bombs.y = mario.y - 10
+                    bombs.caught(mario)
             head.absorb = False
             mario.absorb = False
             for bombs in seeds:
