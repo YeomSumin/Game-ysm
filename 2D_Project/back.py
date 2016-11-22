@@ -4,8 +4,8 @@ from pico2d import *
 
 class background:
     def __init__(self):
-        self.still = True
-        self.absorb = False
+        self.wind = False
+        self.absorb = True
         self.spit = False
         self.a_absorb = False
         self.count = 2300
@@ -17,14 +17,8 @@ class background:
 
     def draw(self):
         if self.count % 1500 >= 0 and self.count % 1500 <= 800:
-            if self.still:
-                self.absorb = True
-                self.still = False
-            if self.absorb:
-                self.image2.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
-            if self.spit:
-                self.image2.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
-            if self.a_absorb:
-                self.image2.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
+            self.wind = True
+            self.image2.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
         elif self.count % 1500 > 800:
+            self.wind = False
             self.image.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
