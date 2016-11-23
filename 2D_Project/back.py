@@ -3,11 +3,13 @@ import random
 from pico2d import *
 
 class background:
+
+    NOT, ABSORB, SPIT, A_ABSORB = 0, 1, 2, 3
+
     def __init__(self):
         self.wind = False
-        self.absorb = True
-        self.spit = False
-        self.a_absorb = False
+        self.state = self.NOT
+        self.change = None
         self.count = 2300
         self.image = load_image('background1.png')
         self.image2 = load_image('background2.png')

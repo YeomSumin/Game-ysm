@@ -11,13 +11,12 @@ class bomb:
     exploimage = None
 
     def __init__(self):
-        self.catch = False
         self.turn = False
         self.coll = False
         self.put = False
         self.explosion = False
-        self.suck = random.randint(1, 7)
-        self.move = 0
+        self.suck = random.randint(1, 6)
+        self.dir = 0
         self.x = 275
         self.y = 600
         self.total_frames = 0
@@ -31,13 +30,12 @@ class bomb:
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_z):
-            self.catch = True
             self.coll = False
             self.put = True
 
     def absorb(self):
         self.turn = True
-        self.move = random.randint(1, 5)
+        #self.dir = random.randint(1, 5)
         if self.boframe < 10:
             self.boframe = random.randint(10, 11)
         if self.count % 10 == 0:
@@ -57,9 +55,9 @@ class bomb:
 
     def spit(self):
         if (self.suck % 3) == 0:
-            if self.coll == False:
+            #if self.coll == False:
                 self.y += 1
-                if (self.move % 2) == 0:
+                if (self.dir % 2) == 0:
                     self.x += 3 / 10
                 else:
                     self.x -= 3 / 10
@@ -80,7 +78,7 @@ class bomb:
         """
         else:#absorb 아닐때
             if self.turn == False and self.coll == False:
-                self.suck = random.randint(0, 7)
+                self.suck = random.randint(1, 6)
         """
 
     def caught(self, mario):

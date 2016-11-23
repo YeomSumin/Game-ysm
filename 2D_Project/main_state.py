@@ -103,61 +103,68 @@ def handle_events():
             mario.handle_event(event)
             for bombs in seeds:
                 bombs.handle_event(event)
+
     if back.wind:
-        if back.absorb:  # 배경
-            head.open()  # 뻐끔 입 벌림
-            mario.absorb()  # 마리오 빨림
+        if back.state == back.ABSORB:
+            head.open()
+            mario.absorb()
             for bombs in seeds:
-                bombs.absorb()  # 폭탄 빨림
-            if collide(mario, head):  # 마리오와 뻐끔 부딪힘
-                back.spit = True
-                back.absorb = False
-            for bombs in seeds:
+                bombs.absorb()
                 if collide(bombs, head):
                     head.spit = True
 
-        elif back.spit:  # 배경
+        elif back.state == back.SPIT:
             head.open()
-            # mario.spit() #마리오 뱉어짐
+            # mario.spit()
             for bombs in seeds:
-                bombs.spit()  # 폭탄 뱉어짐
+                bombs.spit()
             if head.spit:
                 for bombs in seeds:
                     if collide(mario, bombs):
                         bombs.explode()
                         mario.life_minus()
-                        back.absorb = True
-                        back.spit = False
-                for bombs in seeds:
-                    if bombs.catch:
+                        back.change = 0
+                    elif bombs.catch:
                         bombs.caught()
-                        back.a_absorb = True
-                        back.spit = False
-                    else:
-                        mario.spit()
-                        mario.life_minus()
-                        back.absorb = True
-                        back.spit = False
+            else:
+                mario.spit()
+                mario.life_minus()
+                back.change = 0
 
-        elif back.a_absorb:
-            head.open()  # 뻐끔 입 벌림
-            mario.absorb()  # 마리오 빨림
-            for bombs in seeds:
-                bombs.absorb()  # 폭탄 빨림
+        elif back.state == back.A_ABSORB:
+            head.open()
+            mario.absorb()
+            #for bombs in seeds:
+                #bombs.absorb()
             if collide(mario, head):
                 head.spit = False
-                back.spit = True
-                back.a_absorb = False
+                back.change = 2
 
             for bombs in seeds:
                 if collide(bombs, head):
                     bombs.explode()
                     head.life_minus()
-                    head.spit = False
-                    back.absorb = True
-                    back.a_absorb = False
     else:
-        pass
+        mario.suck = False
+        head.state = head.CLOSE
+
+        if back.state == back.NOT:
+            back.state = back.ABSORB
+"""
+        if back.state == back.ABSORB:
+            back.state = back.SPIT
+
+        if back.state == back.SPIT:
+            if back.change == 0:
+                back.state = back.NOT
+            back.state = back.A_ABSORB
+
+        if back.state == back.A_ABSORB:
+            if back.change == 2:
+                back.state = back.SPIT
+            back.state = back.ABSORB
+"""
+
 
 def update():
     global frame_time
