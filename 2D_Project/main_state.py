@@ -1,8 +1,7 @@
 import random
 from pico2d import *
 
-# 수정완료 - 배경까지 바뀜
-# bomb.absorb()부터 함수 재정리, 공 제이슨으로 X
+# 공 제이슨으로 X
 
 import game_framework
 import title_state
@@ -16,9 +15,6 @@ from stem import flower_leg
 name = "MainState"
 
 current_time = 0.0
-change = False
-moment = False
-pick = False
 back = None
 stem = None
 head = None
