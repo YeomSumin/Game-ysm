@@ -86,7 +86,7 @@ def resume():
 
 
 def handle_events():
-    global change, moment, pick, seeds
+    global pick, seeds
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -138,20 +138,20 @@ def handle_events():
                     head.life_minus()
     else:
         mario.suck = False
-        head.state = head.CLOSE
-
+        head.close()
+"""
         if back.state == back.NOT:
             back.state = back.ABSORB
-"""
-        if back.state == back.ABSORB:
+
+        elif back.state == back.ABSORB:
             back.state = back.SPIT
 
-        if back.state == back.SPIT:
+        elif back.state == back.SPIT:
             if back.change == 0:
                 back.state = back.NOT
             back.state = back.A_ABSORB
 
-        if back.state == back.A_ABSORB:
+        elif back.state == back.A_ABSORB:
             if back.change == 2:
                 back.state = back.SPIT
             back.state = back.ABSORB

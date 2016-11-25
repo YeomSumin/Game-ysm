@@ -36,6 +36,9 @@ class flower_head:
     def open(self):
         self.state = self.OPEN
 
+    def close(self):
+        self.state = self.CLOSE
+
     def life_minus(self):
         pass
 
