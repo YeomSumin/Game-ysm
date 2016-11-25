@@ -1,8 +1,6 @@
 import random
 from pico2d import *
 
-# 공 제이슨으로 X
-
 import game_framework
 import title_state
 
@@ -130,8 +128,6 @@ def handle_events():
         elif back.state == back.A_ABSORB:
             head.open()
             mario.absorb()
-            #for bombs in seeds:
-                #bombs.absorb()
             if collide(mario, head):
                 head.spit = False
                 back.change = 2
