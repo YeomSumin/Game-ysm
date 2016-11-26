@@ -14,6 +14,7 @@ class bomb:
         self.turn = False
         self.coll = False
         self.put = False
+        self.catch = False
         self.explosion = False
         self.suck = random.randint(1, 6)
         self.dir = 0
@@ -32,6 +33,7 @@ class bomb:
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_z):
             self.coll = False
             self.put = True
+            self.catch = True
 
     def absorb(self):
         self.turn = True
@@ -49,9 +51,9 @@ class bomb:
                 self.y -= 0.9
 
             if self.x < 280:
-                self.x += 0.7
+                self.x += 0.4
             else:
-                self.x -= 0.7
+                self.x -= 0.4
 
     def spit(self):
         if (self.suck % 3) == 0:
@@ -74,7 +76,6 @@ class bomb:
                 if self.exframe == 4:
                     self.explosion = False
                 self.exframe = (self.exframe + 1) % 5
-
         """
         else:#absorb 아닐때
             if self.turn == False and self.coll == False:
@@ -82,8 +83,9 @@ class bomb:
         """
 
     def caught(self, mario):
-        self.x = mario.x
-        self.y = mario.y - 10
+        if self.catch:
+            self.x = mario.x
+            self.y = mario.y - 10
 
     def explode(self):
         self.explosion = True

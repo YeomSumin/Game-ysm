@@ -1,6 +1,8 @@
 import random
 from pico2d import *
 
+#bombs catch 부분
+
 import game_framework
 import title_state
 
@@ -18,7 +20,7 @@ stem = None
 head = None
 mario = None
 seeds = None
-
+state1 = 0
 
 def create_bombgroup():
     bombgroup_data_file = open('bomb_data.txt', 'r')
@@ -86,7 +88,7 @@ def resume():
 
 
 def handle_events():
-    global state1, state2, pick, seeds
+    global state1, pick, seeds
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -106,6 +108,7 @@ def handle_events():
                 bombs.absorb()
                 if collide(bombs, head):
                     head.spit = True
+            state1 = 1
 
         elif back.state == back.SPIT:
             head.open()
@@ -115,15 +118,20 @@ def handle_events():
             if head.spit:
                 for bombs in seeds:
                     if collide(mario, bombs):
-                        bombs.explode()
-                        mario.life_minus()
-                        back.change = 0
-                    elif bombs.catch:
-                        bombs.caught()
+                        if bombs.catch:
+                            bombs.caught(mario)
+                        else:
+                            bombs.explode()
+                            mario.life_minus()
+                            back.change = 0
+                    #elif bombs.catch:
+                        #bombs.caught(mario)
             else:
                 mario.spit()
                 mario.life_minus()
                 back.change = 0
+
+            state1 = 2
 
         elif back.state == back.A_ABSORB:
             head.open()
@@ -136,26 +144,27 @@ def handle_events():
                 if collide(bombs, head):
                     bombs.explode()
                     head.life_minus()
+
+            state1 = 3
     else:
         mario.suck = False
         head.close()
-"""
+
         if back.state == back.NOT:
             back.state = back.ABSORB
 
-        elif back.state == back.ABSORB:
+        elif back.state == back.ABSORB and state1 == 1:
             back.state = back.SPIT
 
-        elif back.state == back.SPIT:
+        elif back.state == back.SPIT and state1 == 2:
             if back.change == 0:
                 back.state = back.NOT
             back.state = back.A_ABSORB
 
-        elif back.state == back.A_ABSORB:
+        elif back.state == back.A_ABSORB and state1 == 3:
             if back.change == 2:
                 back.state = back.SPIT
             back.state = back.ABSORB
-"""
 
 
 def update():
@@ -166,6 +175,7 @@ def update():
     stem.update()
     for bombs in seeds:
         bombs.update(frame_time)
+        bombs.caught(mario)
     head.update(frame_time)
 
 

@@ -21,6 +21,6 @@ class background:
         if self.count % 1500 >= 0 and self.count % 1500 <= 800:
             self.wind = True
             self.image2.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
-        elif self.count % 1500 > 800 and self.state == self.NOT:
+        elif self.count % 1500 > 800:
             self.wind = False
             self.image.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
