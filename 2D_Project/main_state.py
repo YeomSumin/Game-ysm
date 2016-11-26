@@ -86,7 +86,7 @@ def resume():
 
 
 def handle_events():
-    global pick, seeds
+    global state1, state2, pick, seeds
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
