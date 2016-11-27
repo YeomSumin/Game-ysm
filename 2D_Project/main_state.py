@@ -118,12 +118,12 @@ def handle_events():
             if head.spit:
                 for bombs in seeds:
                     if collide(mario, bombs):
-                        if bombs.catch:
-                            bombs.caught(mario)
-                        else:
+                        if bombs.z == False:
                             bombs.explode()
                             mario.life_minus()
                             back.change = 0
+                        elif bombs.z == True:
+                            bombs.caught()
                     #elif bombs.catch:
                         #bombs.caught(mario)
             else:
@@ -174,8 +174,7 @@ def update():
     mario.update(frame_time)
     stem.update()
     for bombs in seeds:
-        bombs.update(frame_time)
-        bombs.caught(mario)
+        bombs.update(frame_time, mario)
     head.update(frame_time)
 
 

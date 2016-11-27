@@ -14,6 +14,7 @@ class bomb:
         self.turn = False
         self.coll = False
         self.put = False
+        self.z = False
         self.catch = False
         self.explosion = False
         self.suck = random.randint(1, 6)
@@ -29,11 +30,16 @@ class bomb:
         if bomb.exploimage == None:
             bomb.exploimage = load_image('explosion.png')
 
+
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_z):
             self.coll = False
             self.put = True
-            self.catch = True
+            self.z = True
+
+            if self.catch:
+                self.z = False
+
 
     def absorb(self):
         self.turn = True
@@ -64,7 +70,11 @@ class bomb:
                 else:
                     self.x -= 3 / 10
 
-    def update(self, frame_time):
+    def caught(self):
+        if self.z:
+            self.catch = True
+
+    def update(self, frame_time, mario):
         self.total_frames += bomb.FRAMES_PER_ACTION * bomb.ACTION_PER_TIME * frame_time
         self.count += 1
 
@@ -76,16 +86,15 @@ class bomb:
                 if self.exframe == 4:
                     self.explosion = False
                 self.exframe = (self.exframe + 1) % 5
+
+        if self.catch:
+            self.x = mario.x
+            self.y = mario.y - 10
         """
         else:#absorb 아닐때
             if self.turn == False and self.coll == False:
                 self.suck = random.randint(1, 6)
         """
-
-    def caught(self, mario):
-        if self.catch:
-            self.x = mario.x
-            self.y = mario.y - 10
 
     def explode(self):
         self.explosion = True
