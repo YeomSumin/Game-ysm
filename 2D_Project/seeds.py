@@ -16,6 +16,7 @@ class bomb:
         self.put = False
         self.z = False
         self.catch = False
+        self.catching = False
         self.explosion = False
         self.suck = random.randint(1, 6)
         self.dir = 0
@@ -35,10 +36,11 @@ class bomb:
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_z):
             self.coll = False
             self.put = True
-            self.z = True
 
-            if self.catch:
-                self.z = False
+            if self.catching:
+                self.catch = False
+            else:
+                self.z = True
 
 
     def absorb(self):
@@ -73,6 +75,7 @@ class bomb:
     def caught(self):
         if self.z:
             self.catch = True
+            self.catching = True
 
     def update(self, frame_time, mario):
         self.total_frames += bomb.FRAMES_PER_ACTION * bomb.ACTION_PER_TIME * frame_time

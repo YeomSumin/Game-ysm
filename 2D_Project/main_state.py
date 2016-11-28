@@ -141,6 +141,7 @@ def handle_events():
                 back.change = 2
 
             for bombs in seeds:
+                bombs.absorb()
                 if collide(bombs, head):
                     bombs.explode()
                     head.life_minus()
