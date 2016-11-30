@@ -1,7 +1,7 @@
 import random
 from pico2d import *
 
-#bombs catch 부분
+#bombs 초기화
 
 import game_framework
 import title_state
@@ -105,6 +105,7 @@ def handle_events():
             head.open()
             mario.absorb()
             for bombs in seeds:
+                bombs.unexplode()
                 bombs.absorb()
                 if collide(bombs, head):
                     head.spit = True

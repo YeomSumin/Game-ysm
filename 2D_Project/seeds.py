@@ -39,6 +39,7 @@ class bomb:
 
             if self.catching:
                 self.catch = False
+                self.put = True
             else:
                 self.z = True
 
@@ -101,6 +102,10 @@ class bomb:
 
     def explode(self):
         self.explosion = True
+
+    def unexplode(self):
+        self.explosion = False
+        self.put = False
 
     def draw(self):
         if self.explosion == True:
