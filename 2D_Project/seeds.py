@@ -42,6 +42,8 @@ class bomb:
                 self.put = True
             else:
                 self.z = True
+        elif (event.type, event.key) == (SDL_KEYUP, SDLK_z):
+            self.z = False
 
 
     def absorb(self):
@@ -55,7 +57,7 @@ class bomb:
             else:
                 self.boframe = (self.boframe + 1) % 13
 
-        if (self.suck % 3) == 0 and (self.coll == False):
+        if (self.suck % 3) == 0: #and (self.coll == False):
             if self.y < 720 and self.y > 140:
                 self.y -= 0.9
 
@@ -67,6 +69,7 @@ class bomb:
     def spit(self):
         if (self.suck % 3) == 0:
             #if self.coll == False:
+            if self.explosion == False:
                 self.y += 1
                 if (self.dir % 2) == 0:
                     self.x += 3 / 10
@@ -78,6 +81,7 @@ class bomb:
             self.catch = True
             self.catching = True
 
+
     def update(self, frame_time, mario):
         self.total_frames += bomb.FRAMES_PER_ACTION * bomb.ACTION_PER_TIME * frame_time
         self.count += 1
@@ -87,13 +91,16 @@ class bomb:
 
         if self.put:
             if self.count % 10 == 0:
-                if self.exframe == 4:
-                    self.explosion = False
-                self.exframe = (self.exframe + 1) % 5
+                if self.exframe < 6:
+                    self.exframe += 1
+
+                    if self.exframe == 5:
+                        self.explosion = False
 
         if self.catch:
             self.x = mario.x
             self.y = mario.y - 10
+
         """
         else:#absorb 아닐때
             if self.turn == False and self.coll == False:
@@ -103,8 +110,8 @@ class bomb:
     def explode(self):
         self.explosion = True
 
+
     def unexplode(self):
-        self.explosion = False
         self.put = False
 
     def draw(self):

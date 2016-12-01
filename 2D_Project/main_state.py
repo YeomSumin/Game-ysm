@@ -1,7 +1,7 @@
 import random
 from pico2d import *
 
-#bombs 초기화
+#bombs 터지고 사라져...
 
 import game_framework
 import title_state
@@ -151,6 +151,8 @@ def handle_events():
     else:
         mario.suck = False
         head.close()
+        for bombs in seeds:
+            bombs.unexplode()
 
         if back.state == back.NOT:
             back.state = back.ABSORB
