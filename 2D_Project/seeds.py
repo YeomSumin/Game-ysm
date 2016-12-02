@@ -40,8 +40,8 @@ class bomb:
             if self.catching:
                 self.catch = False
                 self.put = True
-            else:
-                self.z = True
+            #else:
+                #self.z = True
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_z):
             self.z = False
 
