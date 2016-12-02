@@ -22,6 +22,8 @@ class bomb:
         self.dir = 0
         self.x = 275
         self.y = 600
+        self.originx = 0
+        self.originy = 0
         self.total_frames = 0
         self.boframe = random.randint(0, 10)
         self.exframe = 0
