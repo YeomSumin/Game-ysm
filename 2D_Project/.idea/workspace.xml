@@ -44,21 +44,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_state.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main_state.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main_state.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1500">
-              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+            <state relative-caret-position="75">
+              <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
               <folding>
-                <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#777#1042#0" expanded="false" />
-                <element signature="e#1071#1186#0" expanded="false" />
-                <element signature="e#1206#1417#0" expanded="false" />
-                <element signature="e#1436#1545#0" expanded="false" />
-                <element signature="e#1565#1569#0" expanded="false" />
-                <element signature="e#1590#1594#0" expanded="false" />
-                <element signature="e#4106#4314#0" expanded="false" />
+                <element signature="e#375#851#0" expanded="false" />
+                <element signature="e#877#1142#0" expanded="false" />
+                <element signature="e#1171#1286#0" expanded="false" />
+                <element signature="e#1306#1517#0" expanded="false" />
+                <element signature="e#1536#1645#0" expanded="false" />
+                <element signature="e#1665#1669#0" expanded="false" />
+                <element signature="e#1690#1694#0" expanded="false" />
+                <element signature="e#4343#4551#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bomb_data.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bomb_data.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -75,11 +85,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="seeds.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="seeds.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/seeds.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="98" column="41" selection-start-line="98" selection-start-column="41" selection-end-line="98" selection-end-column="41" />
+            <state relative-caret-position="425">
+              <caret line="122" column="24" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="24" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -145,8 +155,8 @@
         <option value="$PROJECT_DIR$/flower_leg.py" />
         <option value="$PROJECT_DIR$/head.py" />
         <option value="$PROJECT_DIR$/back.py" />
-        <option value="$PROJECT_DIR$/main_state.py" />
         <option value="$PROJECT_DIR$/seeds.py" />
+        <option value="$PROJECT_DIR$/main_state.py" />
       </list>
     </option>
   </component>
@@ -474,14 +484,14 @@
         <state relative-caret-position="1550">
           <caret line="122" column="44" selection-start-line="122" selection-start-column="44" selection-end-line="122" selection-end-column="44" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#777#1042#0" expanded="false" />
-            <element signature="e#1071#1186#0" expanded="false" />
-            <element signature="e#1206#1417#0" expanded="false" />
-            <element signature="e#1436#1545#0" expanded="false" />
-            <element signature="e#1565#1569#0" expanded="false" />
-            <element signature="e#1590#1594#0" expanded="false" />
-            <element signature="e#4106#4314#0" expanded="false" />
+            <element signature="e#375#851#0" expanded="false" />
+            <element signature="e#877#1142#0" expanded="false" />
+            <element signature="e#1171#1286#0" expanded="false" />
+            <element signature="e#1306#1517#0" expanded="false" />
+            <element signature="e#1536#1645#0" expanded="false" />
+            <element signature="e#1665#1669#0" expanded="false" />
+            <element signature="e#1690#1694#0" expanded="false" />
+            <element signature="e#4343#4551#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -526,14 +536,14 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#777#1042#0" expanded="false" />
-            <element signature="e#1071#1186#0" expanded="false" />
-            <element signature="e#1206#1417#0" expanded="false" />
-            <element signature="e#1436#1545#0" expanded="false" />
-            <element signature="e#1565#1569#0" expanded="false" />
-            <element signature="e#1590#1594#0" expanded="false" />
-            <element signature="e#4106#4314#0" expanded="false" />
+            <element signature="e#375#851#0" expanded="false" />
+            <element signature="e#877#1142#0" expanded="false" />
+            <element signature="e#1171#1286#0" expanded="false" />
+            <element signature="e#1306#1517#0" expanded="false" />
+            <element signature="e#1536#1645#0" expanded="false" />
+            <element signature="e#1665#1669#0" expanded="false" />
+            <element signature="e#1690#1694#0" expanded="false" />
+            <element signature="e#4343#4551#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -578,14 +588,14 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#777#1042#0" expanded="false" />
-            <element signature="e#1071#1186#0" expanded="false" />
-            <element signature="e#1206#1417#0" expanded="false" />
-            <element signature="e#1436#1545#0" expanded="false" />
-            <element signature="e#1565#1569#0" expanded="false" />
-            <element signature="e#1590#1594#0" expanded="false" />
-            <element signature="e#4106#4314#0" expanded="false" />
+            <element signature="e#375#851#0" expanded="false" />
+            <element signature="e#877#1142#0" expanded="false" />
+            <element signature="e#1171#1286#0" expanded="false" />
+            <element signature="e#1306#1517#0" expanded="false" />
+            <element signature="e#1536#1645#0" expanded="false" />
+            <element signature="e#1665#1669#0" expanded="false" />
+            <element signature="e#1690#1694#0" expanded="false" />
+            <element signature="e#4343#4551#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -704,13 +714,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bomb_data.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/background.py" />
     <entry file="file://$PROJECT_DIR$/character.py" />
     <entry file="file://$PROJECT_DIR$/bomb.py" />
@@ -776,23 +779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main_state.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1500">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#777#1042#0" expanded="false" />
-            <element signature="e#1071#1186#0" expanded="false" />
-            <element signature="e#1206#1417#0" expanded="false" />
-            <element signature="e#1436#1545#0" expanded="false" />
-            <element signature="e#1565#1569#0" expanded="false" />
-            <element signature="e#1590#1594#0" expanded="false" />
-            <element signature="e#4106#4314#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mario.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1518">
@@ -803,12 +789,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bomb_data.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/seeds.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="98" column="41" selection-start-line="98" selection-start-column="41" selection-end-line="98" selection-end-column="41" />
+        <state relative-caret-position="425">
+          <caret line="122" column="24" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="24" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main_state.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+          <folding>
+            <element signature="e#375#851#0" expanded="false" />
+            <element signature="e#877#1142#0" expanded="false" />
+            <element signature="e#1171#1286#0" expanded="false" />
+            <element signature="e#1306#1517#0" expanded="false" />
+            <element signature="e#1536#1645#0" expanded="false" />
+            <element signature="e#1665#1669#0" expanded="false" />
+            <element signature="e#1690#1694#0" expanded="false" />
+            <element signature="e#4343#4551#0" expanded="false" />
           </folding>
         </state>
       </provider>

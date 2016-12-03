@@ -83,6 +83,14 @@ class bomb:
             self.catch = True
             self.catching = True
 
+    def re_position(self):
+        self.x = self.originx
+        self.y = self.originy
+
+
+    def re_random(self):
+        self.suck = random.randint(1, 6)
+
 
     def update(self, frame_time, mario):
         self.total_frames += bomb.FRAMES_PER_ACTION * bomb.ACTION_PER_TIME * frame_time
@@ -97,7 +105,7 @@ class bomb:
                     self.exframe += 1
 
                     if self.exframe == 5:
-                        self.explosion = False
+                        self.explosion = None
 
         if self.catch:
             self.x = mario.x
@@ -112,9 +120,9 @@ class bomb:
     def explode(self):
         self.explosion = True
 
-
     def unexplode(self):
         self.put = False
+        self.explosion = False
 
     def draw(self):
         if self.explosion == True:

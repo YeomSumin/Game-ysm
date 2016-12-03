@@ -34,6 +34,8 @@ def create_bombgroup():
         bombs.name = name
         bombs.x = bombgroup_data[name]['x']
         bombs.y = bombgroup_data[name]['y']
+        bombs.originx = bombgroup_data[name]['x']
+        bombs.originy = bombgroup_data[name]['y']
         bombgroup.append(bombs)
 
     return bombgroup
@@ -105,7 +107,7 @@ def handle_events():
             head.open()
             mario.absorb()
             for bombs in seeds:
-                bombs.unexplode()
+                #bombs.unexplode()
                 bombs.absorb()
                 if collide(bombs, head):
                     head.spit = True
@@ -168,7 +170,11 @@ def handle_events():
         elif back.state == back.A_ABSORB and state1 == 3:
             if back.change == 2:
                 back.state = back.SPIT
-            back.state = back.ABSORB
+            else:
+                for bombs in seeds:
+                    bombs.re_random()
+                    bombs.re_position()
+                back.state = back.ABSORB
 
 
 def update():
