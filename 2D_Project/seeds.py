@@ -20,8 +20,8 @@ class bomb:
         self.explosion = False
         self.suck = random.randint(1, 6)
         self.dir = 0
-        self.x = 275
-        self.y = 600
+        self.x = 0
+        self.y = 0
         self.originx = 0
         self.originy = 0
         self.total_frames = 0
@@ -42,8 +42,8 @@ class bomb:
             if self.catching:
                 self.catch = False
                 self.put = True
-            #else:
-                #self.z = True
+            else:
+                self.z = True
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_z):
             self.z = False
 
@@ -91,7 +91,7 @@ class bomb:
         if self.count % 100 == 0:
             self.boframe = int(self.total_frames + 1) % 10
 
-        if self.put:
+        if self.explosion:
             if self.count % 10 == 0:
                 if self.exframe < 6:
                     self.exframe += 1
