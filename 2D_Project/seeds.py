@@ -111,12 +111,6 @@ class bomb:
             self.x = mario.x
             self.y = mario.y - 10
 
-        """
-        else:#absorb 아닐때
-            if self.turn == False and self.coll == False:
-                self.suck = random.randint(1, 6)
-        """
-
     def explode(self):
         self.explosion = True
 
