@@ -108,7 +108,7 @@ def handle_events():
             mario.absorb()
             for bombs in seeds:
                 #bombs.unexplode()
-                bombs.absorb()
+                bombs.absorb(frame_time)
                 if collide(bombs, head):
                     head.spit = True
             state1 = 1
@@ -144,7 +144,7 @@ def handle_events():
                 back.change = 2
 
             for bombs in seeds:
-                bombs.absorb()
+                bombs.absorb(frame_time)
                 if collide(bombs, head):
                     bombs.explode()
                     head.life_minus()

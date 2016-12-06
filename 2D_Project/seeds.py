@@ -48,7 +48,8 @@ class bomb:
             self.z = False
 
 
-    def absorb(self):
+    def absorb(self, frame_time):
+        self.total_frames += bomb.FRAMES_PER_ACTION * bomb.ACTION_PER_TIME * frame_time
         self.turn = True
         #self.dir = random.randint(1, 5)
         if self.boframe < 10:
