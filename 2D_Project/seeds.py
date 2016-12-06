@@ -37,11 +37,11 @@ class bomb:
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_z):
             self.coll = False
-            self.put = True
+            #self.put = True
 
             if self.catching:
                 self.catch = False
-                self.put = True
+                #self.put = True
             else:
                 self.z = True
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_z):
@@ -54,7 +54,7 @@ class bomb:
         #self.dir = random.randint(1, 5)
         if self.boframe < 10:
             self.boframe = random.randint(10, 11)
-        if self.count % 10 == 0:
+        if self.count % 100 == 0:
             if self.boframe == 11:
                 self.boframe = 10
             else:
@@ -84,14 +84,15 @@ class bomb:
             self.catch = True
             self.catching = True
 
+    def no_catching(self):
+        self.catching = False
+
     def re_position(self):
         self.x = self.originx
         self.y = self.originy
 
-
     def re_random(self):
         self.suck = random.randint(1, 6)
-
 
     def update(self, frame_time, mario):
         self.total_frames += bomb.FRAMES_PER_ACTION * bomb.ACTION_PER_TIME * frame_time
@@ -121,7 +122,7 @@ class bomb:
 
     def draw(self):
         if self.explosion == True:
-            self.exploimage.clip_draw(self.exframe * 120, 0, 120, 100, self.x, self.y, 60, 50)
+            self.exploimage.clip_draw(self.exframe * 120, 0, 120, 100, self.x, self.y, 70, 60) #60 50
         else:
             self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, self.x, self.y, 35, 45)
 

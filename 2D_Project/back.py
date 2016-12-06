@@ -14,6 +14,9 @@ class background:
         self.image = load_image('background1.png')
         self.image2 = load_image('background2.png')
 
+    def no_change(self):
+        self.change = None
+
     def update(self):
         self.count += 1
 

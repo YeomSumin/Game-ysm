@@ -1,7 +1,7 @@
 import random
 from pico2d import *
 
-#bombs 터지고 사라져...
+#과정 정리...
 
 import game_framework
 import title_state
@@ -107,7 +107,6 @@ def handle_events():
             head.open()
             mario.absorb()
             for bombs in seeds:
-                #bombs.unexplode()
                 bombs.absorb(frame_time)
                 if collide(bombs, head):
                     head.spit = True
@@ -127,8 +126,8 @@ def handle_events():
                             back.change = 0
                         elif bombs.z == True:
                             bombs.caught()
-                    #elif bombs.catch:
-                        #bombs.caught(mario)
+                    else:
+                        back.change = 0
             else:
                 mario.spit()
                 mario.life_minus()
@@ -157,6 +156,9 @@ def handle_events():
             bombs.unexplode()
 
         if back.state == back.NOT:
+            for bombs in seeds:
+                bombs.no_catching()
+            back.no_change()
             back.state = back.ABSORB
 
         elif back.state == back.ABSORB and state1 == 1:
@@ -164,17 +166,21 @@ def handle_events():
 
         elif back.state == back.SPIT and state1 == 2:
             if back.change == 0:
+                for bombs in seeds:
+                    bombs.re_random()
+                    bombs.re_position()
                 back.state = back.NOT
-            back.state = back.A_ABSORB
+            else:
+                back.state = back.A_ABSORB
 
         elif back.state == back.A_ABSORB and state1 == 3:
             if back.change == 2:
                 back.state = back.SPIT
             else:
                 for bombs in seeds:
-                    bombs.re_random()
-                    bombs.re_position()
-                back.state = back.ABSORB
+                    bombs.explode()
+                    mario.life_minus()
+                back.state = back.NOT
 
 
 def update():
