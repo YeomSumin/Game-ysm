@@ -1,8 +1,6 @@
 import random
 from pico2d import *
 
-#과정 정리...
-
 import game_framework
 import title_state
 
