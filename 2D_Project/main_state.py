@@ -1,6 +1,8 @@
 import random
 from pico2d import *
 
+#spit시 부딪힌 후 폭발이미지
+
 import game_framework
 import title_state
 
@@ -100,6 +102,8 @@ def handle_events():
             for bombs in seeds:
                 bombs.handle_event(event)
 
+    print("%d", back.change)
+
     if back.wind:
         if back.state == back.ABSORB:
             head.open()
@@ -108,6 +112,9 @@ def handle_events():
                 bombs.absorb(frame_time)
                 if collide(bombs, head):
                     head.spit = True
+                    back.change = None
+                if head.spit == False:
+                    back.change = 0
             state1 = 1
 
         elif back.state == back.SPIT:
@@ -115,21 +122,24 @@ def handle_events():
             # mario.spit()
             for bombs in seeds:
                 bombs.spit()
-            if head.spit:
-                for bombs in seeds:
-                    if collide(mario, bombs):
-                        if bombs.z == False:
-                            bombs.explode()
-                            mario.life_minus()
-                            back.change = 0
-                        elif bombs.z == True:
-                            bombs.caught()
-                    else:
-                        back.change = 0
-            else:
-                mario.spit()
-                mario.life_minus()
-                back.change = 0
+                if head.spit:
+                    for bombs in seeds:
+                        if collide(mario, bombs):
+                            if bombs.z == False:
+                                if collide(mario, bombs):
+                                    bombs.explode()
+                                    mario.life_minus()
+                                    back.change = 0
+                            else:
+                                if collide(mario, bombs):
+                                    bombs.caught()
+                                    back.change = None
+                                else:
+                                    back.change = 0
+                else:
+                    mario.spit()
+                    mario.life_minus()
+                    back.change = 0
 
             state1 = 2
 
@@ -154,13 +164,19 @@ def handle_events():
             bombs.unexplode()
 
         if back.state == back.NOT:
+            state1 = 0
             for bombs in seeds:
                 bombs.no_catching()
+                bombs.re_random()
+                bombs.re_position()
             back.no_change()
             back.state = back.ABSORB
 
         elif back.state == back.ABSORB and state1 == 1:
-            back.state = back.SPIT
+            if back.change == 0:
+                back.state = back.NOT
+            else:
+                back.state = back.SPIT
 
         elif back.state == back.SPIT and state1 == 2:
             if back.change == 0:

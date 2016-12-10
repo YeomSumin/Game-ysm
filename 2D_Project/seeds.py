@@ -75,7 +75,7 @@ class bomb:
                     self.x -= 3 / 10
 
     def caught(self):
-        if self.z:
+        #if self.z:
             self.catch = True
             self.catching = True
 
