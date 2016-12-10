@@ -11,8 +11,6 @@ class bomb:
     exploimage = None
 
     def __init__(self):
-        self.turn = False
-        self.coll = False
         self.put = False
         self.z = False
         self.catch = False
@@ -36,7 +34,6 @@ class bomb:
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_z):
-            self.coll = False
             #self.put = True
 
             if self.catching:
@@ -50,7 +47,6 @@ class bomb:
 
     def absorb(self, frame_time):
         self.total_frames += bomb.FRAMES_PER_ACTION * bomb.ACTION_PER_TIME * frame_time
-        self.turn = True
         #self.dir = random.randint(1, 5)
         if self.boframe < 10:
             self.boframe = random.randint(10, 11)
@@ -60,7 +56,7 @@ class bomb:
             else:
                 self.boframe = (self.boframe + 1) % 13
 
-        if (self.suck % 3) == 0: #and (self.coll == False):
+        if (self.suck % 3) == 0:
             if self.y < 720 and self.y > 140:
                 self.y -= 0.9
 
@@ -71,7 +67,6 @@ class bomb:
 
     def spit(self):
         if (self.suck % 3) == 0:
-            #if self.coll == False:
             if self.explosion == False:
                 self.y += 1
                 if (self.dir % 2) == 0:
