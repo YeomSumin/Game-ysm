@@ -115,6 +115,13 @@ class bomb:
         self.put = False
         self.explosion = False
 
+    def level_up(self):
+        """
+        라이프 한줄이 모두 깎이면
+        빨려들어가는 강도 높이기
+        """
+        pass
+
     def draw(self):
         if self.explosion == True:
             self.exploimage.clip_draw(self.exframe * 120, 0, 120, 100, self.x, self.y, 70, 60) #60 50

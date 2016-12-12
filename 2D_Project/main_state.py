@@ -155,6 +155,7 @@ def handle_events():
                 if collide(bombs, head):
                     bombs.explode()
                     head.life_minus()
+                    bombs.level_up()
 
             state1 = 3
     else:
