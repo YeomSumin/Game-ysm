@@ -2,6 +2,17 @@ import random
 from pico2d import *
 
 #spit시 부딪힌 후 폭발이미지
+"""
+pre_score = score
+
+if score != pre_score:
+	score -= 50
+-------------------------
+pre_score = score
+
+if score != pre_score:
+	score += 50
+"""
 
 import game_framework
 import title_state
@@ -21,6 +32,8 @@ head = None
 mario = None
 seeds = None
 state1 = 0
+pre_score = 0
+score = 0
 
 def create_bombgroup():
     bombgroup_data_file = open('bomb_data.txt', 'r')
@@ -102,7 +115,6 @@ def handle_events():
             for bombs in seeds:
                 bombs.handle_event(event)
 
-    print("%d", back.change)
 
     if back.wind:
         if back.state == back.ABSORB:
@@ -199,7 +211,7 @@ def handle_events():
 
 
 def update():
-    global frame_time
+    global frame_time, score
     frame_time = get_frame_time()
     back.update()
     mario.update(frame_time)
@@ -207,6 +219,8 @@ def update():
     for bombs in seeds:
         bombs.update(frame_time, mario)
     head.update(frame_time)
+
+    print("%d", score)
 
 
 def draw():
