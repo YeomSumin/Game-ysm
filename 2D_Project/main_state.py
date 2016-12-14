@@ -3,15 +3,19 @@ from pico2d import *
 
 #spit시 부딪힌 후 폭발이미지
 """
+count = 0
 pre_score = score
 
-if score != pre_score:
+if score != pre_score and count == 0:
 	score -= 50
+	count += 1
 -------------------------
+count = 0
 pre_score = score
 
-if score != pre_score:
+if score != pre_score and count == 0:
 	score += 50
+	count += 1
 """
 
 import game_framework
@@ -103,7 +107,7 @@ def resume():
 
 
 def handle_events():
-    global state1, pick, seeds
+    global state1, pick, seeds, pre_score, score
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
