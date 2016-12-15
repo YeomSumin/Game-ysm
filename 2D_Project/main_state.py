@@ -2,6 +2,7 @@ import random
 from pico2d import *
 
 #spit시 부딪힌 후 폭발이미지
+#폭탄 뱉을때...
 """
 count = 0
 pre_score = score
@@ -38,6 +39,7 @@ seeds = None
 state1 = 0
 pre_score = 0
 score = 0
+count = 0
 
 def create_bombgroup():
     bombgroup_data_file = open('bomb_data.txt', 'r')
@@ -107,7 +109,7 @@ def resume():
 
 
 def handle_events():
-    global state1, pick, seeds, pre_score, score
+    global state1, pick, seeds, pre_score, score, count
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -175,6 +177,7 @@ def handle_events():
 
             state1 = 3
     else:
+        count = 0
         mario.suck = False
         head.close()
         for bombs in seeds:
