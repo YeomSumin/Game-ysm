@@ -3,21 +3,6 @@ from pico2d import *
 
 #spit시 부딪힌 후 폭발이미지
 #폭탄 뱉을때...
-"""
-count = 0
-pre_score = score
-
-if score != pre_score and count == 0:
-	score -= 50
-	count += 1
--------------------------
-count = 0
-pre_score = score
-
-if score != pre_score and count == 0:
-	score += 50
-	count += 1
-"""
 
 import game_framework
 import title_state
@@ -148,6 +133,12 @@ def handle_events():
                                     bombs.explode()
                                     mario.life_minus()
                                     back.change = 0
+
+                                    pre_score = score
+
+                                    if score == pre_score and count == 0:
+                                        score -= 50
+                                        count += 1
                             else:
                                 if collide(mario, bombs):
                                     bombs.caught()
@@ -159,6 +150,12 @@ def handle_events():
                     mario.life_minus()
                     back.change = 0
 
+                    pre_score = score
+
+                    if score == pre_score and count == 0:
+                        score -= 50
+                        count += 1
+
             state1 = 2
 
         elif back.state == back.A_ABSORB:
@@ -168,12 +165,24 @@ def handle_events():
                 head.spit = False
                 back.change = 2
 
+                pre_score = score
+
+                if score == pre_score and count == 0:
+                    score -= 50
+                    count += 1
+
             for bombs in seeds:
                 bombs.absorb(frame_time)
                 if collide(bombs, head):
                     bombs.explode()
                     head.life_minus()
                     bombs.level_up()
+
+                    pre_score = score
+
+                    if score == pre_score and count == 0:
+                        score += 50
+                        count += 1
 
             state1 = 3
     else:
