@@ -6,6 +6,7 @@ from pico2d import *
 
 import game_framework
 import title_state
+import ranking_state
 
 from back import background
 from mario import character
@@ -77,7 +78,20 @@ def enter():
 
 
 def exit():
-    global back, stem, head, mario, seeds
+    global back, stem, head, mario, seeds, score
+
+    f = open('ranking_data.txt', 'r')
+
+    ranking_data = json.load(f)
+    f.close()
+
+    # 상수 대신에 시간이랑 x,y좌표, 이름을 넣어주면 된다.
+    ranking_data.append({'Score':score})
+
+    f = open('ranking_data.txt', 'w')
+    json.dump(ranking_data, f)
+    f.close()
+
     del(back)
     del(stem)
     del(head)
@@ -101,6 +115,8 @@ def handle_events():
             game_framework.quit()
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
             game_framework.change_state(title_state)
+        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_q):
+            game_framework.change_state(ranking_state)
         else:
             mario.handle_event(event)
             for bombs in seeds:
@@ -235,8 +251,6 @@ def update():
     for bombs in seeds:
         bombs.update(frame_time, mario)
     head.update(frame_time)
-
-    print("%d", score)
 
 
 def draw():

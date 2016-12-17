@@ -10,8 +10,8 @@ font = None
 
 def enter():
     global image, font
-    image = load_image('blackboard.png')
-    font = load_font('ENCR10B.TTF', 40)
+    image = load_image('background1.png')
+    font = load_font('ENCR10B.TTF', 20)
 
 
 def exit():
@@ -58,7 +58,7 @@ def draw_ranking():
     def my_sort(a):
         for i in range(len(a)):
             for j in range(i + 1, len(a)):
-                if a[i]['time'] < a[j]['time']:
+                if a[i]['Score'] < a[j]['Score']:
                     a[i], a[j] = a[j], a[i]
 
     f = open('ranking_data.txt', 'r')
@@ -69,11 +69,11 @@ def draw_ranking():
     my_sort(ranking_data)
 
     for data in ranking_data[:10]:
-        print('(Time:%4.1f,  x:%3d,  y:%3d)' % (data['time'], data['x'], data['y']))
+        print('(Score:%d)' % (data['Score']))
 
     y = 0
 
     for data in ranking_data[:10]:
-        font.draw(150, 450 - 40 * y, 'Time:%4.1f, x:%3d, y:%3d' % (data['time'], data['x'], data['y']), (255, 255, 255))
+        font.draw(150, 450 - 40 * y, 'Score:%d' % (data['Score']), (255, 255, 255))
 
     y += 1
