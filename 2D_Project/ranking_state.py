@@ -11,7 +11,7 @@ font = None
 def enter():
     global image, font
     image = load_image('background1.png')
-    font = load_font('ENCR10B.TTF', 20)
+    font = load_font('YD여고시절md.TTF', 50)
 
 
 def exit():
@@ -28,7 +28,7 @@ def resume():
     pass
 
 
-def handle_events(frame_time):
+def handle_events():
     events = get_events()
 
 
@@ -40,16 +40,16 @@ def handle_events(frame_time):
                 game_framework.change_state(title_state)
 
 
-def update(frame_time):
+def update():
     pass
 
 
-def draw(frame_time):
+def draw():
     global image
 
     clear_canvas()
-    image.draw(400, 300)
-    font.draw(300, 500, "[RANKING]", (255, 255, 255))
+    image.clip_draw(0, 0, 256, 392, 275, 360, 550, 720)
+    font.draw(180, 600, "[RANKING]", (0, 0, 0))
     draw_ranking()
     update_canvas()
 
@@ -74,6 +74,5 @@ def draw_ranking():
     y = 0
 
     for data in ranking_data[:10]:
-        font.draw(150, 450 - 40 * y, 'Score:%d' % (data['Score']), (255, 255, 255))
-
-    y += 1
+        font.draw(150, 500 - 40 * y, '%d : %d' % (y+1, data['Score']), (71, 102, 0))
+        y += 1

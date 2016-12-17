@@ -92,11 +92,11 @@ def exit():
     json.dump(ranking_data, f)
     f.close()
 
-    del(back)
-    del(stem)
-    del(head)
-    del(mario)
-    del(seeds)
+    #del(back)
+    #del(stem)
+    #del(head)
+    #del(mario)
+    #del(seeds)
 
 
 def pause():
