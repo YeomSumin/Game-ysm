@@ -2,7 +2,6 @@ import random
 from pico2d import *
 
 #spit시 부딪힌 후 폭발이미지
-#폭탄 뱉을때...
 
 import game_framework
 import title_state

@@ -17,7 +17,7 @@ class bomb:
         self.catching = False
         self.explosion = False
         self.suck = random.randint(1, 6)
-        self.dir = 0
+        self.dir = random.randint(1, 6)
         self.x = 0
         self.y = 0
         self.originx = 0
