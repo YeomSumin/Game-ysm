@@ -39,14 +39,12 @@ class bomb:
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_z):
-            #self.put = True
-
             if self.catching:
                 self.catch = False
                 #self.put = True
             else:
                 self.z = True
-        elif (event.type, event.key) == (SDL_KEYUP, SDLK_z):
+        if (event.type, event.key) == (SDL_KEYUP, SDLK_z): #elif->if
             self.z = False
 
 
@@ -55,6 +53,7 @@ class bomb:
         #self.dir = random.randint(1, 5)
         if self.boframe < 10:
             self.boframe = random.randint(10, 11)
+
         if self.count % 100 == 0:
             if self.boframe == 11:
                 self.boframe = 10
@@ -86,6 +85,7 @@ class bomb:
 
     def no_catching(self):
         self.catching = False
+        self.catch = False #추가
 
     def re_position(self):
         self.x = self.originx

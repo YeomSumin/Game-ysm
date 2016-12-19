@@ -121,6 +121,8 @@ def handle_events():
             for bombs in seeds:
                 bombs.handle_event(event)
 
+    print("%d", back.change)
+
 
     if back.wind:
         if back.state == back.ABSORB:
@@ -145,21 +147,23 @@ def handle_events():
                         if collide(mario, bombs):
                             if bombs.z == False:
                                 if collide(mario, bombs):
-                                    bombs.explode()
-                                    mario.life_minus()
                                     back.change = 0
+                                    bombs.explode()
+                                    bombs.no_catching()
+                                    mario.life_minus()
 
                                     pre_score = score
 
                                     if score == pre_score and count == 0:
                                         score -= 50
                                         count += 1
-                            else:
+
+                            if bombs.z == True: #else->if
                                 if collide(mario, bombs):
                                     bombs.caught()
-                                    back.change = None
-                                else:
-                                    back.change = 0
+                                    back.change = 1
+                                #else:
+                                    #back.change = 0
                 else:
                     mario.spit()
                     mario.life_minus()
@@ -225,6 +229,7 @@ def handle_events():
         elif back.state == back.SPIT and state1 == 2:
             if back.change == 0:
                 for bombs in seeds:
+                    bombs.no_catching()
                     bombs.re_random()
                     bombs.re_position()
                 back.state = back.NOT
