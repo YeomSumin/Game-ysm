@@ -7,6 +7,10 @@ class bomb:
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 10
 
+    TIME_PER_EXACTION = 4
+    EXACTION_PER_TIME = 1.0 / TIME_PER_EXACTION
+    FRAMES_PER_EXACTION = 5
+
     boimage = None
     exploimage = None
 
@@ -23,6 +27,7 @@ class bomb:
         self.originx = 0
         self.originy = 0
         self.total_frames = 0
+        self.total_exframes = 0
         self.boframe = random.randint(0, 10)
         self.exframe = 0
         self.count = random.randint(0, 9)
@@ -91,6 +96,7 @@ class bomb:
 
     def update(self, frame_time, mario):
         self.total_frames += bomb.FRAMES_PER_ACTION * bomb.ACTION_PER_TIME * frame_time
+        self.total_exframes += bomb.FRAMES_PER_EXACTION * bomb.EXACTION_PER_TIME * frame_time
         self.count += 1
 
         if self.count % 100 == 0:
@@ -99,7 +105,9 @@ class bomb:
         if self.explosion:
             if self.count % 10 == 0:
                 if self.exframe < 6:
-                    self.exframe += 1
+                    #self.exframe += 1
+
+                    self.exframe = int(self.total_exframes + 1) % 6 #추가한 것
 
                     if self.exframe == 5:
                         self.explosion = None
@@ -114,6 +122,8 @@ class bomb:
     def unexplode(self):
         self.put = False
         self.explosion = False
+        self.total_exframes = 0
+        self.exframe = 0
 
     def level_up(self):
         """
