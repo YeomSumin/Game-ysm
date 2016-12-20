@@ -1,7 +1,9 @@
 import random
 from pico2d import *
 
-#spit시 부딪힌 후 폭발이미지
+#폭발이미지 다시
+#폭탄 잡으면 마리오 멈추도록
+#뻐끔 목숨 이미지 다시
 
 import game_framework
 import title_state
@@ -121,7 +123,7 @@ def handle_events():
             for bombs in seeds:
                 bombs.handle_event(event)
 
-    print("%d", back.change)
+    #print("%d", back.change)
 
 
     if back.wind:
@@ -193,6 +195,7 @@ def handle_events():
             for bombs in seeds:
                 bombs.absorb(frame_time)
                 if collide(bombs, head):
+                    bombs.put = True
                     bombs.explode()
                     head.life_minus()
                     bombs.level_up()
@@ -202,14 +205,24 @@ def handle_events():
                     if score == pre_score and count == 0:
                         score += 50
                         count += 1
+                else:
+                    back.change = 3
 
             state1 = 3
     else:
-        count = 0
+        if back.change != 3:
+            for bombs in seeds:
+                bombs.unexplode()
+
+            count = 0
+            mario.life_count = 0
+            head.life_count = 0
+
         mario.suck = False
         head.close()
         for bombs in seeds:
-            bombs.unexplode()
+            bombs.put = False
+
 
         if back.state == back.NOT:
             state1 = 0
@@ -239,10 +252,18 @@ def handle_events():
         elif back.state == back.A_ABSORB and state1 == 3:
             if back.change == 2:
                 back.state = back.SPIT
-            else:
+            elif back.change == 3:
                 for bombs in seeds:
-                    bombs.explode()
-                    mario.life_minus()
+                    if collide(mario, bombs):
+                        bombs.explode()
+                        mario.life_minus()
+
+                        pre_score = score
+
+                        if score == pre_score and count == 0:
+                            score -= 50
+                            count += 1
+
                 back.state = back.NOT
 
 

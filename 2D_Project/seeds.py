@@ -61,7 +61,7 @@ class bomb:
                 self.boframe = (self.boframe + 1) % 13
 
         if (self.suck % 3) == 0:
-            if self.y < 720 and self.y > 140:
+            if self.y < 720 and self.y > 100: #720 140
                 self.y -= 0.9
 
             if self.x < 280:
@@ -138,5 +138,5 @@ class bomb:
         else:
             self.boimage.clip_draw(self.boframe * 50, 0, 50, 60, self.x, self.y, 35, 45)
 
-    def get_bb(self):
-        return self.x - 18, self.y - 28, self.x + 18, self.y + 28
+    def get_bb(self): # 18 28 18 28
+        return self.x - 18, self.y - 20, self.x + 18, self.y + 20

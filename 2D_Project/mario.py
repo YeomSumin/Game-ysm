@@ -21,7 +21,7 @@ class character:
     def __init__(self):
         self.suck = False
         self.state = self.STILL
-        self.chframe, self.chreframe, self.life_frame, self.count = 0, 0, 5, 0
+        self.chframe, self.chreframe, self.life_frame, self.count, self.life_count = 0, 0, 5, 0, 0
         self.total_frames, self.total_rframes = 0.0, 0.0
         self.level = 0.5
         self.stage = False
@@ -79,20 +79,19 @@ class character:
         pass
 
     def life_minus(self):
-        count = 0
         pre_life = self.life_frame
 
-        if self.life_frame == pre_life and count == 0:
+        if self.life_frame == pre_life and self.life_count == 0:
             self.life_frame -= 1;
-            count += 1
+            self.life_count += 1
 
     def draw(self):
+        self.life_image.clip_draw(0, self.life_frame * 90, 400, 90, 267, 690, 300, 48)  # 268 691 300 50
+
         if self.suck == False:
             self.chimage.clip_draw(self.chframe * 60, 0, 60, 160, self.x, self.y, 56, 86) #60 90
         else:
             self.chreimage.clip_draw(self.chreframe * 85, 0, 85, 160, self.x, self.y, 60, 87) #63 90
-
-        self.life_image.clip_draw(0, self.life_frame * 90, 400, 90, 268, 691, 300, 50) # 275 690 200 40
 
     def get_bb(self):
         return self.x - 3, self.y - 3, self.x + 3, self.y + 3 #28 43
