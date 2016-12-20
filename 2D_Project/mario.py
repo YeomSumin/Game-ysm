@@ -21,13 +21,14 @@ class character:
     def __init__(self):
         self.suck = False
         self.state = self.STILL
-        self.chframe, self.chreframe, self.count = 0, 0, 0
+        self.chframe, self.chreframe, self.life_frame, self.count = 0, 0, 5, 0
         self.total_frames, self.total_rframes = 0.0, 0.0
         self.level = 0.5
         self.stage = False
         self.x, self.y = 275, 600
         self.chimage = load_image('character.png')
         self.chreimage = load_image('character_resist.png')
+        self.life_image = load_image('mario_life.png')
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_UP):
@@ -78,13 +79,20 @@ class character:
         pass
 
     def life_minus(self):
-        pass
+        count = 0
+        pre_life = self.life_frame
+
+        if self.life_frame == pre_life and count == 0:
+            self.life_frame -= 1;
+            count += 1
 
     def draw(self):
         if self.suck == False:
             self.chimage.clip_draw(self.chframe * 60, 0, 60, 160, self.x, self.y, 56, 86) #60 90
         else:
             self.chreimage.clip_draw(self.chreframe * 85, 0, 85, 160, self.x, self.y, 60, 87) #63 90
+
+        self.life_image.clip_draw(0, self.life_frame * 90, 400, 90, 268, 691, 300, 50) # 275 690 200 40
 
     def get_bb(self):
         return self.x - 3, self.y - 3, self.x + 3, self.y + 3 #28 43
