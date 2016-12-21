@@ -2,8 +2,6 @@ import random
 from pico2d import *
 
 #폭발이미지 다시
-#폭탄 잡으면 마리오 멈추도록
-#뻐끔 목숨 이미지 다시
 
 import game_framework
 import title_state
@@ -163,6 +161,8 @@ def handle_events():
                             if bombs.z == True: #else->if
                                 if collide(mario, bombs):
                                     bombs.caught()
+                                    if bombs.catching:
+                                        mario.catching()
                                     back.change = 1
                                 #else:
                                     #back.change = 0
@@ -193,6 +193,8 @@ def handle_events():
                     count += 1
 
             for bombs in seeds:
+                if bombs.catching:
+                    mario.catch = False
                 bombs.absorb(frame_time)
                 if collide(bombs, head):
                     bombs.put = True

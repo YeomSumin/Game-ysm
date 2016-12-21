@@ -24,7 +24,7 @@ class character:
         self.chframe, self.chreframe, self.life_frame, self.count, self.life_count = 0, 0, 5, 0, 0
         self.total_frames, self.total_rframes = 0.0, 0.0
         self.level = 0.5
-        self.stage = False
+        self.catch = False
         self.x, self.y = 275, 600
         self.chimage = load_image('character.png')
         self.chreimage = load_image('character_resist.png')
@@ -66,7 +66,8 @@ class character:
 
         if self.count % 100 == 0:
             #self.chframe = (self.chframe + 1) % 10
-            self.chframe = int(self.total_frames) % 10
+            if self.catch == False:
+                self.chframe = int(self.total_frames) % 10
             self.chreframe = int(self.total_rframes) % 4
 
     def absorb(self):
@@ -77,6 +78,10 @@ class character:
 
     def spit(self):
         pass
+
+    def catching(self):
+        self.catch = True
+        self.chframe = 0
 
     def life_minus(self):
         pre_life = self.life_frame

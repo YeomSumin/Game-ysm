@@ -19,7 +19,7 @@ class flower_head:
         self.abframe = 2
         self.count = 0
         self.image = load_image('flower_head.png')
-        self.life_image = load_image('flower_life2.png')
+        self.life_image = load_image('flower_life3.png')
 
     def update(self, frame_time):
         self.total_frames += flower_head.FRAMES_PER_ACTION * flower_head.ACTION_PER_TIME * frame_time
@@ -53,7 +53,7 @@ class flower_head:
         else:
             self.image.clip_draw(self.frame * 400, 0, 400, 400, 280, 100, 260, 260)
 
-        self.life_image.clip_draw(0, self.life_frame * 90, 270, 90, 270, 20, 150, 48)
+        self.life_image.clip_draw(0, self.life_frame * 90, 270, 90, 270, 30, 200, 50)
         #267, 20, 200, 48
 
     def get_bb(self): # 130 110 130 110
