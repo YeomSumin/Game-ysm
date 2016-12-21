@@ -2,6 +2,9 @@ import random
 
 from pico2d import *
 
+import game_framework
+import ranking_state
+
 class character:
     PIXEL_PER_METER = (40.0 / 0.1)  # 40 pixel 10cm
     RUN_SPEED_KMPH = 2.5  # Km / Hour
@@ -49,6 +52,9 @@ class character:
         elif (event.type, event.key) == (SDL_KEYUP, SDLK_UP):
             if self.state in (self.UP,):
                 self.state = self.STILL
+
+        if self.life_frame == 0:
+            game_framework.change_state(ranking_state)
 
 
     def update(self, frame_time):

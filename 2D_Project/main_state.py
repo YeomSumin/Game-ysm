@@ -25,6 +25,7 @@ state1 = 0
 pre_score = 0
 score = 0
 count = 0
+no_draw = False
 
 def create_bombgroup():
     bombgroup_data_file = open('bomb_data.txt', 'r')
@@ -107,7 +108,7 @@ def resume():
 
 
 def handle_events():
-    global state1, pick, seeds, pre_score, score, count
+    global state1, pick, seeds, pre_score, score, count, no_draw
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -153,6 +154,7 @@ def handle_events():
                                 if collide(mario, bombs):
                                     back.change = 0
                                     bombs.explode()
+                                    no_draw = True
                                     bombs.no_catching()
                                     mario.life_minus()
 
@@ -217,7 +219,7 @@ def handle_events():
 
             state1 = 3
     else:
-        if back.change != 3:
+        if back.change != 3 or no_draw == False:
             for bombs in seeds:
                 bombs.unexplode()
 
@@ -240,9 +242,11 @@ def handle_events():
             back.no_change()
             mario.up = False
             mario.suck = False
+            no_draw = None
             back.state = back.ABSORB
 
         elif back.state == back.ABSORB and state1 == 1:
+            no_draw = False
             if back.change == 0:
                 back.state = back.NOT
             else:
@@ -254,6 +258,7 @@ def handle_events():
                     bombs.no_catching()
                     bombs.re_random()
                     bombs.re_position()
+                    bombs.explosion = None
                 back.state = back.NOT
             else:
                 back.state = back.A_ABSORB
