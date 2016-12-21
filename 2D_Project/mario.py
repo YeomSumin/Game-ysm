@@ -20,10 +20,11 @@ class character:
 
     def __init__(self):
         self.suck = False
+        self.up = False
         self.state = self.STILL
         self.chframe, self.chreframe, self.life_frame, self.count, self.life_count = 0, 0, 5, 0, 0
         self.total_frames, self.total_rframes = 0.0, 0.0
-        self.level = 0.5
+        self.level = 0.6 #0.5
         self.catch = False
         self.x, self.y = 275, 600
         self.chimage = load_image('character.png')
@@ -77,7 +78,9 @@ class character:
             self.y -= self.level
 
     def spit(self):
-        pass
+        self.suck = True
+        if self.y <= 600:
+            self.y += 0.3
 
     def catching(self):
         self.catch = True
@@ -99,4 +102,4 @@ class character:
             self.chreimage.clip_draw(self.chreframe * 85, 0, 85, 160, self.x, self.y, 60, 87) #63 90
 
     def get_bb(self):
-        return self.x - 3, self.y - 3, self.x + 3, self.y + 3 #28 43
+        return self.x - 28, self.y - 43, self.x + 28, self.y + 43 #28 43

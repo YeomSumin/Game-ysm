@@ -57,4 +57,4 @@ class flower_head:
         #267, 20, 200, 48
 
     def get_bb(self): # 130 110 130 110
-        return self.x - 130, self.y - 50, self.x + 130, self.y + 50
+        return self.x - 130, self.y - 110, self.x + 130, self.y + 110

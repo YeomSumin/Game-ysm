@@ -23,7 +23,7 @@
       <file leaf-file-name="seeds.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/seeds.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3475">
+            <state relative-caret-position="1824">
               <caret line="141" column="65" selection-start-line="141" selection-start-column="65" selection-end-line="141" selection-end-column="65" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -45,8 +45,8 @@
       <file leaf-file-name="mario.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mario.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1975">
-              <caret line="81" column="16" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
+            <state relative-caret-position="222">
+              <caret line="80" column="24" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -66,12 +66,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main_state.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main_state.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main_state.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+            <state relative-caret-position="339">
+              <caret line="241" column="30" selection-start-line="241" selection-start-column="30" selection-end-line="241" selection-end-column="30" />
               <folding>
+                <element signature="e#0#13#0" expanded="true" />
                 <element signature="e#422#898#0" expanded="false" />
                 <element signature="e#924#1189#0" expanded="false" />
                 <element signature="e#1218#1333#0" expanded="false" />
@@ -84,11 +85,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="head.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="head.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/head.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="55" column="74" selection-start-line="55" selection-start-column="74" selection-end-line="55" selection-end-column="74" />
+            <state relative-caret-position="1425">
+              <caret line="59" column="68" selection-start-line="59" selection-start-column="68" selection-end-line="59" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -120,9 +121,9 @@
         <option value="$PROJECT_DIR$/ranking_data.txt" />
         <option value="$PROJECT_DIR$/ranking_state.py" />
         <option value="$PROJECT_DIR$/seeds.py" />
+        <option value="$PROJECT_DIR$/head.py" />
         <option value="$PROJECT_DIR$/mario.py" />
         <option value="$PROJECT_DIR$/main_state.py" />
-        <option value="$PROJECT_DIR$/head.py" />
       </list>
     </option>
   </component>
@@ -379,7 +380,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="407" y="0" width="1083" height="1038" extended-state="1" />
+    <frame x="407" y="0" width="1083" height="1038" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20366795" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -459,6 +460,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#422#898#0" expanded="false" />
             <element signature="e#924#1189#0" expanded="false" />
             <element signature="e#1218#1333#0" expanded="false" />
@@ -503,6 +505,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#422#898#0" expanded="false" />
             <element signature="e#924#1189#0" expanded="false" />
             <element signature="e#1218#1333#0" expanded="false" />
@@ -697,9 +700,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/head.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1425">
+          <caret line="59" column="68" selection-start-line="59" selection-start-column="68" selection-end-line="59" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/seeds.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3475">
+        <state relative-caret-position="1824">
           <caret line="141" column="65" selection-start-line="141" selection-start-column="65" selection-end-line="141" selection-end-column="65" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -709,8 +720,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mario.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1975">
-          <caret line="81" column="16" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
+        <state relative-caret-position="222">
+          <caret line="80" column="24" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -719,9 +730,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main_state.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+        <state relative-caret-position="339">
+          <caret line="241" column="30" selection-start-line="241" selection-start-column="30" selection-end-line="241" selection-end-column="30" />
           <folding>
+            <element signature="e#0#13#0" expanded="true" />
             <element signature="e#422#898#0" expanded="false" />
             <element signature="e#924#1189#0" expanded="false" />
             <element signature="e#1218#1333#0" expanded="false" />
@@ -730,14 +742,6 @@
             <element signature="e#1975#1979#0" expanded="false" />
             <element signature="e#2000#2004#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/head.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="55" column="74" selection-start-line="55" selection-start-column="74" selection-end-line="55" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
