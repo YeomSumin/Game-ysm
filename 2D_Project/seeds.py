@@ -22,10 +22,9 @@ class bomb:
         self.explosion = False
         self.suck = random.randint(1, 6)
         self.dir = random.randint(1, 6)
-        self.x = 0
-        self.y = 0
-        self.originx = 0
-        self.originy = 0
+        self.x = 0; self.y = 0
+        self.originx = 0; self.originy = 0
+        self.xlevel = 0.4; self.ylevel = 0.9
         self.total_frames = 0
         self.total_exframes = 0
         self.boframe = random.randint(0, 10)
@@ -62,12 +61,12 @@ class bomb:
 
         if (self.suck % 3) == 0:
             if self.y < 720 and self.y > 100: #720 140
-                self.y -= 0.9
+                self.y -= self.ylevel
 
             if self.x < 280:
-                self.x += 0.4
+                self.x += self.xlevel
             else:
-                self.x -= 0.4
+                self.x -= self.xlevel
 
     def spit(self):
         if (self.suck % 3) == 0:
@@ -104,12 +103,12 @@ class bomb:
 
         if self.explosion:
             if self.count % 10 == 0:
-                if self.exframe < 6:
+                if self.exframe < 5: #6
                     #self.exframe += 1
 
-                    self.exframe = int(self.total_exframes + 1) % 6 #추가한 것
+                    self.exframe = int(self.total_exframes) % 5 #6
 
-                    if self.exframe == 5:
+                    if self.exframe == 5: #5
                         self.explosion = None
 
         if self.catch:
@@ -121,15 +120,11 @@ class bomb:
 
     def unexplode(self):
         self.put = False
-        self.explosion = False
+        self.explosion = False #None
         self.total_exframes = 0
         self.exframe = 0
 
     def level_up(self):
-        """
-        라이프 한줄이 모두 깎이면
-        빨려들어가는 강도 높이기
-        """
         pass
 
     def draw(self):

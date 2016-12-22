@@ -13,6 +13,7 @@ class flower_head:
     def __init__(self):
         self.state = self.CLOSE
         self.spit = False
+        self.level_up = False
         self.x = 280; self.y = 160
         self.frame, self.life_frame, self.life_count = 0, 3, 0
         self.total_frames = 0
@@ -46,6 +47,10 @@ class flower_head:
         if self.life_frame == pre_life and self.life_count == 0:
             self.life_frame -= 1;
             self.life_count += 1
+
+        if self.life_frame == 0:
+            self.level_up = True
+            self.life_frame = 3
 
     def draw(self): # 280, 160, 240, 240
         if self.state == self.OPEN:

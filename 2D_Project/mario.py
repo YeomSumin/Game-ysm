@@ -99,6 +99,9 @@ class character:
             self.life_frame -= 1;
             self.life_count += 1
 
+    def level_up(self):
+        pass
+
     def draw(self):
         self.life_image.clip_draw(0, self.life_frame * 90, 400, 90, 267, 690, 300, 48)  # 268 691 300 50
 

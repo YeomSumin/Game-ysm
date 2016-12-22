@@ -207,7 +207,6 @@ def handle_events():
                     bombs.put = True
                     bombs.explode()
                     head.life_minus()
-                    bombs.level_up()
 
                     pre_score = score
 
@@ -232,6 +231,9 @@ def handle_events():
         for bombs in seeds:
             bombs.put = False
 
+        if head.level_up:
+            bombs.level_up()
+            mario.level_up()
 
         if back.state == back.NOT:
             state1 = 0
@@ -242,6 +244,7 @@ def handle_events():
             back.no_change()
             mario.up = False
             mario.suck = False
+            bombs.explosion = False
             no_draw = None
             back.state = back.ABSORB
 
