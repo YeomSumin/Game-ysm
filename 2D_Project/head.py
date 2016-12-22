@@ -19,8 +19,11 @@ class flower_head:
         self.total_frames = 0
         self.abframe = 2
         self.count = 0
+        self.wind_bgm = load_wav('wind1.wav')
+        self.die_bgm = load_wav('piranha_plant_die.wav')
         self.image = load_image('flower_head.png')
         self.life_image = load_image('flower_life3.png')
+        self.level_image = load_image('head_levelup.png')
 
     def update(self, frame_time):
         self.total_frames += flower_head.FRAMES_PER_ACTION * flower_head.ACTION_PER_TIME * frame_time
@@ -37,6 +40,9 @@ class flower_head:
 
     def open(self):
         self.state = self.OPEN
+        if self.state == self.OPEN:
+            self.wind_bgm.set_volume(10)
+            self.wind_bgm.play(1)
 
     def close(self):
         self.state = self.CLOSE
@@ -50,6 +56,8 @@ class flower_head:
 
         if self.life_frame == 0:
             self.level_up = True
+            self.die_bgm.set_volume(64)
+            self.die_bgm.play(1)
             self.life_frame = 3
 
     def draw(self): # 280, 160, 240, 240
@@ -61,5 +69,8 @@ class flower_head:
         self.life_image.clip_draw(0, self.life_frame * 90, 270, 90, 270, 30, 200, 50)
         #267, 20, 200, 48
 
+        if self.level_up:
+            self.level_image.clip_draw(0, 0, 270, 90, 275, 360, 270, 90)
+
     def get_bb(self): # 130 110 130 110
-        return self.x - 130, self.y - 110, self.x + 130, self.y + 110
+        return self.x - 130, self.y - 90, self.x + 130, self.y + 90

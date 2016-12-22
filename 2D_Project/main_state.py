@@ -16,6 +16,7 @@ from stem import flower_leg
 name = "MainState"
 
 current_time = 0.0
+bgm = None
 back = None
 stem = None
 head = None
@@ -66,7 +67,7 @@ def get_frame_time():
 
 
 def enter():
-    global back, stem, head, mario, seeds, current_time
+    global back, stem, head, mario, seeds, current_time, bgm
 
     current_time = get_time()
 
@@ -75,6 +76,8 @@ def enter():
     mario = character()
     seeds = create_bombgroup()
     head = flower_head()
+    bgm = load_music('back_bgm.mp3')
+    bgm.repeat_play()
 
 
 def exit():
@@ -122,14 +125,17 @@ def handle_events():
             for bombs in seeds:
                 bombs.handle_event(event)
 
-    print("%d %d", head.spit, mario.y)
-
 
     if back.wind:
         if back.state == back.ABSORB:
             head.open()
+            head.level_up = False
             mario.absorb()
+            #mario.xcount = 0
+            #mario.ycount = 0
             for bombs in seeds:
+                #bombs.xcount = 0
+                #bombs.ycount = 0
                 bombs.absorb(frame_time)
                 if collide(bombs, head):
                     head.spit = True
@@ -154,6 +160,8 @@ def handle_events():
                                 if collide(mario, bombs):
                                     back.change = 0
                                     bombs.explode()
+                                    mario.ungh_sound()
+                                    bombs.bomb_bgm()
                                     no_draw = True
                                     bombs.no_catching()
                                     mario.life_minus()
@@ -175,6 +183,7 @@ def handle_events():
 
                     if mario.up:
                         mario.spit()
+                        mario.ungh_sound()
                         mario.life_minus()
                         back.change = 0
 
@@ -206,6 +215,7 @@ def handle_events():
                 if collide(bombs, head):
                     bombs.put = True
                     bombs.explode()
+                    bombs.bomb_bgm()
                     head.life_minus()
 
                     pre_score = score
@@ -213,8 +223,12 @@ def handle_events():
                     if score == pre_score and count == 0:
                         score += 50
                         count += 1
-                else:
+                #else:
                     back.change = 3
+
+            #if head.level_up:
+                #bombs.level_up()
+                #mario.level_up()
 
             state1 = 3
     else:
@@ -231,12 +245,9 @@ def handle_events():
         for bombs in seeds:
             bombs.put = False
 
-        if head.level_up:
-            bombs.level_up()
-            mario.level_up()
-
         if back.state == back.NOT:
             state1 = 0
+            back.change = None
             for bombs in seeds:
                 bombs.no_catching()
                 bombs.re_random()
@@ -245,6 +256,7 @@ def handle_events():
             mario.up = False
             mario.suck = False
             bombs.explosion = False
+
             no_draw = None
             back.state = back.ABSORB
 
@@ -257,11 +269,14 @@ def handle_events():
 
         elif back.state == back.SPIT and state1 == 2:
             if back.change == 0:
+                head.spit = False
+                """
                 for bombs in seeds:
                     bombs.no_catching()
                     bombs.re_random()
                     bombs.re_position()
                     bombs.explosion = None
+                """
                 back.state = back.NOT
             else:
                 back.state = back.A_ABSORB
@@ -280,6 +295,10 @@ def handle_events():
                         if score == pre_score and count == 0:
                             score -= 50
                             count += 1
+
+                    if head.level_up:
+                        bombs.level_up()
+                        mario.level_up()
 
                 back.state = back.NOT
 

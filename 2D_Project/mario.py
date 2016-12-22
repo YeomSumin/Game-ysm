@@ -27,12 +27,18 @@ class character:
         self.state = self.STILL
         self.chframe, self.chreframe, self.life_frame, self.count, self.life_count = 0, 0, 5, 0, 0
         self.total_frames, self.total_rframes = 0.0, 0.0
-        self.level = 0.6 #0.5
+        self.ylevel = 0.6; self.xlevel = 0.4
+        self.xcount = 0; self.ycount = 0
         self.catch = False
         self.x, self.y = 275, 600
         self.chimage = load_image('character.png')
         self.chreimage = load_image('character_resist.png')
         self.life_image = load_image('mario_life.png')
+        self.ungh = load_wav('mario_ungh.wav')
+
+    def ungh_sound(self):
+        self.ungh.set_volume(20)
+        self.ungh.play(1)
 
     def handle_event(self, event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_UP):
@@ -77,11 +83,19 @@ class character:
                 self.chframe = int(self.total_frames) % 10
             self.chreframe = int(self.total_rframes) % 4
 
+        if self.y >= 680:
+            self.y = 680
+
     def absorb(self):
         self.suck = True
 
-        if self.y > 140:
-            self.y -= self.level
+        if self.y < 720 and self.y > 100:
+            self.y -= self.ylevel
+
+        if self.x < 275:
+            self.x += self.xlevel
+        else:
+            self.x -= self.xlevel
 
     def spit(self):
         self.suck = True
@@ -100,7 +114,17 @@ class character:
             self.life_count += 1
 
     def level_up(self):
-        pass
+        pre_xlevel = self.xlevel
+
+        if self.xlevel == pre_xlevel and self.xcount == 0:
+            self.xlevel += 0.1
+            self.xcount += 1
+
+        pre_ylevel = self.ylevel
+
+        if self.ylevel == pre_ylevel and self.ycount == 0:
+            self.ylevel += 0.1
+            self.ycount += 1
 
     def draw(self):
         self.life_image.clip_draw(0, self.life_frame * 90, 400, 90, 267, 690, 300, 48)  # 268 691 300 50
@@ -111,4 +135,4 @@ class character:
             self.chreimage.clip_draw(self.chreframe * 85, 0, 85, 160, self.x, self.y, 60, 87) #63 90
 
     def get_bb(self):
-        return self.x - 28, self.y - 43, self.x + 28, self.y + 43 #28 43
+        return self.x - 20, self.y - 30, self.x + 20, self.y + 30 #28 43

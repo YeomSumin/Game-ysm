@@ -1,10 +1,11 @@
 import random
 from pico2d import *
 
-#과정 정리...
+#폭발이미지 다시
 
 import game_framework
 import title_state
+import ranking_state
 
 from back import background
 from mario import character
@@ -15,12 +16,17 @@ from stem import flower_leg
 name = "MainState"
 
 current_time = 0.0
+bgm = None
 back = None
 stem = None
 head = None
 mario = None
 seeds = None
 state1 = 0
+pre_score = 0
+score = 0
+count = 0
+no_draw = False
 
 def create_bombgroup():
     bombgroup_data_file = open('bomb_data.txt', 'r')
@@ -61,7 +67,7 @@ def get_frame_time():
 
 
 def enter():
-    global back, stem, head, mario, seeds, current_time
+    global back, stem, head, mario, seeds, current_time, bgm
 
     current_time = get_time()
 
@@ -70,15 +76,30 @@ def enter():
     mario = character()
     seeds = create_bombgroup()
     head = flower_head()
+    bgm = load_music('back_bgm.mp3')
+    bgm.repeat_play()
 
 
 def exit():
-    global back, stem, head, mario, seeds
-    del(back)
-    del(stem)
-    del(head)
-    del(mario)
-    del(seeds)
+    global back, stem, head, mario, seeds, score
+
+    f = open('ranking_data.txt', 'r')
+
+    ranking_data = json.load(f)
+    f.close()
+
+    # 상수 대신에 시간이랑 x,y좌표, 이름을 넣어주면 된다.
+    ranking_data.append({'Score':score})
+
+    f = open('ranking_data.txt', 'w')
+    json.dump(ranking_data, f)
+    f.close()
+
+    #del(back)
+    #del(stem)
+    #del(head)
+    #del(mario)
+    #del(seeds)
 
 
 def pause():
@@ -90,48 +111,87 @@ def resume():
 
 
 def handle_events():
-    global state1, pick, seeds
+    global state1, pick, seeds, pre_score, score, count, no_draw
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
             game_framework.change_state(title_state)
+        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_q):
+            game_framework.change_state(ranking_state)
         else:
             mario.handle_event(event)
             for bombs in seeds:
                 bombs.handle_event(event)
 
+
     if back.wind:
         if back.state == back.ABSORB:
             head.open()
+            head.level_up = False
             mario.absorb()
+            #mario.xcount = 0
+            #mario.ycount = 0
             for bombs in seeds:
+                #bombs.xcount = 0
+                #bombs.ycount = 0
                 bombs.absorb(frame_time)
                 if collide(bombs, head):
                     head.spit = True
+                    back.change = None
+                if collide(mario, head):
+                    mario.up = True
+                    head.spit = True
+                    back.change = None
+                if head.spit == False:
+                    back.change = 0
             state1 = 1
 
         elif back.state == back.SPIT:
             head.open()
-            # mario.spit()
+
             for bombs in seeds:
                 bombs.spit()
-            if head.spit:
-                for bombs in seeds:
-                    if collide(mario, bombs):
-                        if bombs.z == False:
-                            bombs.explode()
-                            mario.life_minus()
-                            back.change = 0
-                        elif bombs.z == True:
-                            bombs.caught()
-                    else:
+                if head.spit:
+                    for bombs in seeds:
+                        if collide(mario, bombs):
+                            if bombs.z == False:
+                                if collide(mario, bombs):
+                                    back.change = 0
+                                    bombs.explode()
+                                    mario.ungh_sound()
+                                    bombs.bomb_bgm()
+                                    no_draw = True
+                                    bombs.no_catching()
+                                    mario.life_minus()
+
+                                    pre_score = score
+
+                                    if score == pre_score and count == 0:
+                                        score -= 50
+                                        count += 1
+
+                            if bombs.z == True: #else->if
+                                if collide(mario, bombs):
+                                    bombs.caught()
+                                    if bombs.catching:
+                                        mario.catching()
+                                    back.change = 1
+                                #else:
+                                    #back.change = 0
+
+                    if mario.up:
+                        mario.spit()
+                        mario.ungh_sound()
+                        mario.life_minus()
                         back.change = 0
-            else:
-                mario.spit()
-                mario.life_minus()
-                back.change = 0
+
+                        pre_score = score
+
+                        if score == pre_score and count == 0:
+                            score -= 50
+                            count += 1
 
             state1 = 2
 
@@ -142,33 +202,81 @@ def handle_events():
                 head.spit = False
                 back.change = 2
 
+                pre_score = score
+
+                if score == pre_score and count == 0:
+                    score -= 50
+                    count += 1
+
             for bombs in seeds:
+                if bombs.catching:
+                    mario.catch = False
                 bombs.absorb(frame_time)
                 if collide(bombs, head):
+                    bombs.put = True
                     bombs.explode()
+                    bombs.bomb_bgm()
                     head.life_minus()
+
+                    pre_score = score
+
+                    if score == pre_score and count == 0:
+                        score += 50
+                        count += 1
+                #else:
+                    back.change = 3
+
+            #if head.level_up:
+                #bombs.level_up()
+                #mario.level_up()
 
             state1 = 3
     else:
+        if back.change != 3 or no_draw == False:
+            for bombs in seeds:
+                bombs.unexplode()
+
+            count = 0
+            mario.life_count = 0
+            head.life_count = 0
+
         mario.suck = False
         head.close()
         for bombs in seeds:
-            bombs.unexplode()
+            bombs.put = False
 
         if back.state == back.NOT:
+            state1 = 0
+            back.change = None
             for bombs in seeds:
                 bombs.no_catching()
+                bombs.re_random()
+                bombs.re_position()
             back.no_change()
+            mario.up = False
+            mario.suck = False
+            bombs.explosion = False
+
+            no_draw = None
             back.state = back.ABSORB
 
         elif back.state == back.ABSORB and state1 == 1:
-            back.state = back.SPIT
+            no_draw = False
+            if back.change == 0:
+                back.state = back.NOT
+            else:
+                back.state = back.SPIT
 
         elif back.state == back.SPIT and state1 == 2:
             if back.change == 0:
+                head.spit = False
+                """
                 for bombs in seeds:
+                    bombs.no_catching()
                     bombs.re_random()
                     bombs.re_position()
+                    bombs.explosion = None
+                """
                 back.state = back.NOT
             else:
                 back.state = back.A_ABSORB
@@ -176,15 +284,27 @@ def handle_events():
         elif back.state == back.A_ABSORB and state1 == 3:
             if back.change == 2:
                 back.state = back.SPIT
-            else:
+            elif back.change == 3:
                 for bombs in seeds:
-                    bombs.explode()
-                    mario.life_minus()
+                    if collide(mario, bombs):
+                        bombs.explode()
+                        mario.life_minus()
+
+                        pre_score = score
+
+                        if score == pre_score and count == 0:
+                            score -= 50
+                            count += 1
+
+                    if head.level_up:
+                        bombs.level_up()
+                        mario.level_up()
+
                 back.state = back.NOT
 
 
 def update():
-    global frame_time
+    global frame_time, score
     frame_time = get_frame_time()
     back.update()
     mario.update(frame_time)
