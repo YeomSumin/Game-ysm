@@ -4,37 +4,37 @@ from internetbook import *
 
 #### Menu  implementation
 def printMenu():
-    print("\nWelcome! Book Manager Program (xml version)")
+    print("\nWelcome! Crime Manager Program (xml version)")
     print("========Menu==========")
-    print("Load xml:  l")
-    print("Print dom to xml: p")
-    print("Quit program:   q")
-    print("print Book list: b")
-    print("Add new book: a")
-    print("sEarch Book Title: e")
-    print("Make html: m")
-    print("----------------------------------------")
     print("Get crime data from year: g")
+    print("Get crime data from age: a")
+    print("Get crime data from relation: r")
+    print("Get crime data from mental: l")
+    print("Get crime data from tool: p")
+    print("Get crime data from clue: e")
+    print("Quit program:   q")
+    print("----------------------------------------")
+    print("print Book list: b")
+    print("Make html: m")
     print("send maIl : i")
     print("sTart Web Service: t")
     print("========Menu==========")
     
 def launcherFunction(menu):
     if menu ==  'l':
-        LoadXMLFromFile()
+        getCrimeDataFromMENTAL()
+    elif menu == 'p':
+        getCrimeDataFromTOOL()
     elif menu == 'q':
         QuitBookMgr()
-    elif menu == 'p':
-        PrintDOMtoXML()
+    elif menu == 'r':
+        getCrimeDataFromRELATION()
     elif menu == 'b':
         PrintBookList(["title",])
     elif menu == 'a':
-        ISBN = str(input ('insert ISBN :'))
-        title = str(input ('insert Title :'))
-        AddBook({'ISBN':ISBN, 'title':title})
+        getCrimeDataFromAGE()
     elif menu == 'e':
-        keyword = str(input ('input keyword to search :'))
-        printBookList(SearchBookTitle(keyword))
+        getCrimeDataFromCLUE()
     elif menu == 'g': 
         isbn = str(input ('input isbn to get :'))
         #isbn = '0596513984'

@@ -34,40 +34,229 @@ def getCrimeDataFromYEAR(isbn):
     if conn == None:
         connectOpenAPIServer()
     # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
-    uri = userURIBuilder(server, start="1", end="10", BASE_YEAR=isbn, STAT_CODE="1", ITEM_CODE1="7", ITEM_CODE2="5")
+    uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=isbn, STAT_CODE="1", ITEM_CODE1="7", ITEM_CODE2="5")
     conn.request("GET", uri)
 
     req = conn.getresponse()
     print(req.status)
     if int(req.status) == 200:
         print("Book data downloading complete!")
-        return extractBookData(req.read().decode('utf-8'))
+        print(req.read().decode('utf-8'))
     else:
         print("OpenAPI request has been failed!! please retry")
         return None
 
-def getBookDataFromISBN(isbn):
-    global server, regKey, conn
-    if conn == None:
-        connectOpenAPIServer()
-    # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
-    uri = userURIBuilder(server, start="1", end="10", BASE_YEAR=isbn, STAT_CODE="1", ITEM_CODE1="7", ITEM_CODE2="5")
-    conn.request("GET", uri)
+def getCrimeDataFromAGE():
+    for j in range(2010, 2014):
+        base_year = str(j)
+        for i in range(5, 25):
+            item_code2 = str(i)
+            global server, regKey, conn
+            if conn == None:
+                connectOpenAPIServer()
+            # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
+            uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=base_year, STAT_CODE="15", ITEM_CODE1="7", ITEM_CODE2=item_code2)
+            conn.request("GET", uri)
 
-    req = conn.getresponse()
-    print(req.status)
-    if int(req.status) == 200:
-        print("Book data downloading complete!")
-        return extractBookData(req.read().decode('utf-8'))
-    else:
-        print("OpenAPI request has been failed!! please retry")
-        return None
+            req = conn.getresponse()
+            print(req.status)
+            if int(req.status) == 200:
+                print("Book data downloading complete!")
+                print(req.read().decode('utf-8'))
+            else:
+                print("OpenAPI request has been failed!! please retry")
+                return None
 
+    for j in range(2014, 2016):
+        base_year = str(j)
+        for i in range(5, 27):
+            item_code2 = str(i)
+            if conn == None:
+                connectOpenAPIServer()
+            # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
+            uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=base_year, STAT_CODE="227", ITEM_CODE1="10211", ITEM_CODE2=item_code2)
+            conn.request("GET", uri)
+
+            req = conn.getresponse()
+            print(req.status)
+            if int(req.status) == 200:
+                print("Book data downloading complete!")
+                print(req.read().decode('utf-8'))
+            else:
+                print("OpenAPI request has been failed!! please retry")
+                return None
+
+def getCrimeDataFromRELATION():
+    for j in range(2010, 2014):
+        base_year = str(j)
+        for i in range(5, 19):
+            item_code2 = str(i)
+            global server, regKey, conn
+            if conn == None:
+                connectOpenAPIServer()
+            # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
+            uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=base_year, STAT_CODE="53", ITEM_CODE1="7", ITEM_CODE2=item_code2)
+            conn.request("GET", uri)
+
+            req = conn.getresponse()
+            print(req.status)
+            if int(req.status) == 200:
+                print("Book data downloading complete!")
+                print(req.read().decode('utf-8'))
+            else:
+                print("OpenAPI request has been failed!! please retry")
+                return None
+
+    for j in range(2014, 2016):
+        base_year = str(j)
+        for i in range(5, 19):
+            item_code2 = str(i)
+            if conn == None:
+                connectOpenAPIServer()
+            # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
+            uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=base_year, STAT_CODE="229", ITEM_CODE1="10211", ITEM_CODE2=item_code2)
+            conn.request("GET", uri)
+
+            req = conn.getresponse()
+            print(req.status)
+            if int(req.status) == 200:
+                print("Book data downloading complete!")
+                print(req.read().decode('utf-8'))
+            else:
+                print("OpenAPI request has been failed!! please retry")
+                return None
+
+def getCrimeDataFromMENTAL():
+    for j in range(2010, 2014):
+        base_year = str(j)
+        for i in range(7, 25):
+            item_code2 = str(i)
+            global server, regKey, conn
+            if conn == None:
+                connectOpenAPIServer()
+            # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
+            uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=base_year, STAT_CODE="56", ITEM_CODE1="7", ITEM_CODE2=item_code2)
+            conn.request("GET", uri)
+
+            req = conn.getresponse()
+            print(req.status)
+            if int(req.status) == 200:
+                print("Book data downloading complete!")
+                print(req.read().decode('utf-8'))
+            else:
+                print("OpenAPI request has been failed!! please retry")
+                return None
+
+    for j in range(2014, 2016):
+        base_year = str(j)
+        for i in range(7, 25):
+            item_code2 = str(i)
+            if conn == None:
+                connectOpenAPIServer()
+            # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
+            uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=base_year, STAT_CODE="208", ITEM_CODE1="10211", ITEM_CODE2=item_code2)
+            conn.request("GET", uri)
+
+            req = conn.getresponse()
+            print(req.status)
+            if int(req.status) == 200:
+                print("Book data downloading complete!")
+                print(req.read().decode('utf-8'))
+            else:
+                print("OpenAPI request has been failed!! please retry")
+                return None
+
+def getCrimeDataFromTOOL():
+    for j in range(2010, 2014):
+        base_year = str(j)
+        for r in range(420, 427):
+            item_code1 = str(r)
+            for i in range(5, 19):
+                item_code2 = str(i)
+                global server, regKey, conn
+                if conn == None:
+                    connectOpenAPIServer()
+                # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
+                uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=base_year, STAT_CODE="36", ITEM_CODE1=item_code1, ITEM_CODE2=item_code2)
+                conn.request("GET", uri)
+
+                req = conn.getresponse()
+                print(req.status)
+                if int(req.status) == 200:
+                    print("Book data downloading complete!")
+                    print(req.read().decode('utf-8'))
+                else:
+                    print("OpenAPI request has been failed!! please retry")
+                    return None
+
+    for j in range(2014, 2016):
+        base_year = str(j)
+        for r in range(420, 427):
+            item_code1 = str(r)
+            for i in range(5, 19):
+                item_code2 = str(i)
+                if conn == None:
+                    connectOpenAPIServer()
+                # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
+                uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=base_year, STAT_CODE="190",
+                                     ITEM_CODE1=item_code1, ITEM_CODE2=item_code2)
+                conn.request("GET", uri)
+
+                req = conn.getresponse()
+                print(req.status)
+                if int(req.status) == 200:
+                    print("Book data downloading complete!")
+                    print(req.read().decode('utf-8'))
+                else:
+                    print("OpenAPI request has been failed!! please retry")
+                    return None
+
+def getCrimeDataFromCLUE():
+    for j in range(2010, 2014):
+        base_year = str(j)
+        for i in range(5, 27):
+            item_code2 = str(i)
+            global server, regKey, conn
+            if conn == None:
+                connectOpenAPIServer()
+            # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
+            uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=base_year, STAT_CODE="40", ITEM_CODE1="7", ITEM_CODE2=item_code2)
+            conn.request("GET", uri)
+
+            req = conn.getresponse()
+            print(req.status)
+            if int(req.status) == 200:
+                print("Book data downloading complete!")
+                print(req.read().decode('utf-8'))
+            else:
+                print("OpenAPI request has been failed!! please retry")
+                return None
+
+    for j in range(2014, 2016):
+        base_year = str(j)
+        for i in range(5, 27):
+            item_code2 = str(i)
+            if conn == None:
+                connectOpenAPIServer()
+            # uri = userURIBuilder(server, key=regKey, query='%20', display="1", start="1", target="book_adv", d_isbn=isbn)
+            uri = userURIBuilder(server, start="1", end="500", BASE_YEAR=base_year, STAT_CODE="172", ITEM_CODE1="10211", ITEM_CODE2=item_code2)
+            conn.request("GET", uri)
+
+            req = conn.getresponse()
+            print(req.status)
+            if int(req.status) == 200:
+                print("Book data downloading complete!")
+                print(req.read().decode('utf-8'))
+            else:
+                print("OpenAPI request has been failed!! please retry")
+                return None
+
+"""
 def extractBookData(strXml):
     #from xml.etree import ElementTree
     #tree = ElementTree.fromstring(strXml)
     print(strXml)
-    """
+
     # Book 엘리먼트를 가져옵니다.
     itemElements = tree.getiterator("row")  # return list type
     print(itemElements)
@@ -77,7 +266,7 @@ def extractBookData(strXml):
         print(strTitle)
         if len(strTitle.text) > 0:
             return {"ISBN": isbn.text, "title": strTitle.text}
-    """
+"""
 
 def sendMain():
     global host, port
