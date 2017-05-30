@@ -100,6 +100,47 @@ def SearchBookTitle(keyword):
     
     return retlist
 
+def MakeHtmlDoc(BookList):
+    from xml.dom.minidom import getDOMImplementation
+    #get Dom Implementation
+    impl = getDOMImplementation()
+    
+    newdoc = impl.createDocument(None, "html", None)  #DOM 按眉 积己
+    top_element = newdoc.documentElement
+    header = newdoc.createElement('header')
+    top_element.appendChild(header)
+
+    # Body 郡府刚飘 积己.
+    body = newdoc.createElement('body')
+
+    for bookitem in BookList:
+        #create bold element
+        b = newdoc.createElement('b')
+        #create text node
+        ibsnText = newdoc.createTextNode("ISBN:" + bookitem[0])
+        b.appendChild(ibsnText)
+
+        body.appendChild(b)
+    
+        # BR 怕弊 (郡府刚飘) 积己.
+        br = newdoc.createElement('br')
+
+        body.appendChild(br)
+
+        #create title Element
+        p = newdoc.createElement('p')
+        #create text node
+        titleText= newdoc.createTextNode("Title:" + bookitem[1])
+        p.appendChild(titleText)
+
+        body.appendChild(p)
+        body.appendChild(br)  #line end
+         
+    #append Body
+    top_element.appendChild(body)
+    
+    return newdoc.toxml()
+
 
 def printBookList(blist):
     for res in blist:
@@ -108,7 +149,7 @@ def printBookList(blist):
 def checkDocument():
     global BooksDoc
     if BooksDoc == None:
-        print("Error : Document is empty")
+        #print("Error : Document is empty")
         return False
     return True
   

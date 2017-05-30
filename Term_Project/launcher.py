@@ -4,7 +4,7 @@ from internetbook import *
 
 #### Menu  implementation
 def printMenu():
-    print("\nWelcome! Book Manager Program (xml version)")
+    print("\n범죄 분석 프로그램")
     print("========Menu==========")
     print("Load xml:  l")
     print("Print dom to xml: p")
@@ -18,38 +18,28 @@ def printMenu():
     print("send maIl : i")
     print("sTart Web Service: t")
     print("========Menu==========")
-
-def PrintAYearMenu(year):
-    print("========", year, "년도==========")
-    print("피해자 성별과 연령:  s")
-    print("범죄발생 월:  m")
-    print("범죄발생시간:  t")
-    print("범죄발생지역:  a")
-    print("범죄자 범행 동기:  mot")
-    print("범죄와 피해자의 관계:  r")
-    print("범죄자 범행시 정신상태: men")
-    print("범죄도구 및 입수방법: tool")
-    print("범죄자 검거단서: c")
-    print("========Menu==========")
-
-def getCrimeDataFromYear(year):
-    cselect = str(input('사건 선택(살인-1, 성폭행-2) :'))
-    PrintAYearMenu(year)
-    select = str(input('메뉴 선택 :'))
-
-    if select == 'r':
-        getRELATIONData(year, cselect)
-    elif select == 'men':
-        getMENTALData(year, cselect)
-    elif select == 'tool':
-        getTOOLData(year)
-    elif select == 'c':
-        getCLUEData(year, cselect)
-
+    
 def launcherFunction(menu):
-    if menu == 'g':
-        year = str(input('input year to get :'))
-        getCrimeDataFromYear(year)
+    if menu ==  'l':
+        LoadXMLFromFile()
+    elif menu == 'q':
+        QuitBookMgr()
+    elif menu == 'p':
+        PrintDOMtoXML()
+    elif menu == 'b':
+        PrintBookList(["title",])
+    elif menu == 'a':
+        ISBN = str(input ('insert ISBN :'))
+        title = str(input ('insert Title :'))
+        AddBook({'ISBN':ISBN, 'title':title})
+    elif menu == 'e':
+        keyword = str(input ('input keyword to search :'))
+        printBookList(SearchBookTitle(keyword))
+    elif menu == 'g': 
+        year = str(input ('년도 입력 :'))
+        #isbn = '0596513984'
+        ret = getCrimeDataFromYear(year)
+        AddBook(ret)
     elif menu == 'm':
         keyword = str(input ('input keyword code to the html  :'))
         html = MakeHtmlDoc(SearchBookTitle(keyword))
@@ -60,8 +50,6 @@ def launcherFunction(menu):
         sendMain()
     elif menu == "t":
         startWebService()
-    elif menu == 'q':
-        QuitBookMgr()
     else:
         print ("error : unknow menu key")
 

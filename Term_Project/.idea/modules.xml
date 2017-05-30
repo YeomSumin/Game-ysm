@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/2부17장.iml" filepath="$PROJECT_DIR$/.idea/2부17장.iml" />
+      <module fileurl="file://C:\Users\Sumin Yeom\Documents\2015180024\Game-ysm\Term_Project\.idea\2부17장.iml" filepath="C:\Users\Sumin Yeom\Documents\2015180024\Game-ysm\Term_Project\.idea\2부17장.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Term_Project.iml" filepath="$PROJECT_DIR$/.idea/Term_Project.iml" />
     </modules>
   </component>
 </project>
